@@ -46,9 +46,8 @@ public class UDPReceiver {
         JSONObject dataJSON = new JSONObject(data);
         if(dataJSON.getBoolean("reqReply") == true){
             UDPSender sender = new UDPSender();
-            System.out.println("rr");
-            System.out.println(packet.getAddress().toString());
-            sender.sendHelloBack(packet.getAddress().toString());
+            InetAddress adrs = packet.getAddress();
+            sender.sendHelloBack(adrs);
         }else{
             //Ajouter le mec à la liste des users
         }

@@ -28,18 +28,29 @@ public class UDPSender {
     }
     
     // TODO : Faire fonction String2INET
-    private void sendJSON(String stringAddress, JSONObject json){
+    private void sendJSON(InetAddress address, JSONObject json){
         try {
-            InetAddress address = InetAddress.getByName(stringAddress);
             buf = json.toString().getBytes(Charset.forName("UTF-8"));
             packet = new DatagramPacket(buf, buf.length, address, port);
             socket.send(packet); 
         } catch (Exception e) {
+            System.out.println("ici ! ");
             System.out.println(e);
-            e.getStackTrace();
+            e.printStackTrace();
         }
     }
 
+    private void sendJSON(String address, JSONObject json){
+        System.out.println("1");
+        try {
+            this.sendJSON(InetAddress.getByName(address), json);
+        } catch (Exception e) {
+            System.out.println("e1");
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
+    
     public void sendHello(){
         JSONObject hello = new JSONObject();
         hello.put("type", new Integer(0));
@@ -49,13 +60,13 @@ public class UDPSender {
         this.sendJSON("255.255.255.255" ,hello);
     }
     
-    public void sendHelloBack(String address){
+    public void sendHelloBack(InetAddress address){
         JSONObject hello = new JSONObject();
         hello.put("type", new Integer(0));
         hello.put("nickname", new String("Bast"));
         hello.put("reqReply", new Boolean(false));
         
-        this.sendJSON("address" ,hello);
+        this.sendJSON(address ,hello);
     }
     
     public void sendBye(){
