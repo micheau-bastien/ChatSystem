@@ -5,6 +5,8 @@
  */
 package chatsystem;
 
+import chatsystem.ni.UDPReceiver;
+import chatsystem.ni.UDPSender;
 import org.json.*;
 /**
  *
@@ -12,6 +14,8 @@ import org.json.*;
  */
 public class ChatSystem {
    
+    UDPSender udpSender;
+    UDPReceiver udpReceiver;
     /**
      * @param args the command line arguments
      */

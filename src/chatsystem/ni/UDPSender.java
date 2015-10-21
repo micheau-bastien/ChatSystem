@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem;
+package chatsystem.ni;
 
 import java.net.*;
 import java.nio.charset.Charset;
@@ -14,7 +14,6 @@ import org.json.*;
  * @author Bastien
  */
 public class UDPSender {    
-    int port = 8045;
     DatagramSocket socket;
     DatagramPacket packet;
     byte[] buf;
@@ -31,7 +30,7 @@ public class UDPSender {
     private void sendJSON(InetAddress address, JSONObject json){
         try {
             buf = json.toString().getBytes(Charset.forName("UTF-8"));
-            packet = new DatagramPacket(buf, buf.length, address, port);
+            packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
             socket.send(packet); 
         } catch (Exception e) {
             System.out.println("ici ! ");
@@ -41,11 +40,12 @@ public class UDPSender {
     }
 
     private void sendJSON(String address, JSONObject json){
-        System.out.println("1");
         try {
+            if(address == "localhost"){
+                this.sendJSON(InetAddress.getLocalHost(), json);
+            }
             this.sendJSON(InetAddress.getByName(address), json);
         } catch (Exception e) {
-            System.out.println("e1");
             System.out.println(e);
             e.printStackTrace();
         }
@@ -53,7 +53,7 @@ public class UDPSender {
     
     public void sendHello(){
         JSONObject hello = new JSONObject();
-        hello.put("type", new Integer(0));
+        hello.put("type", new Integer(ChatNI.TYPE_HELLO));
         hello.put("nickname", new String("Bast"));
         hello.put("reqReply", new Boolean(true));
         
@@ -62,7 +62,7 @@ public class UDPSender {
     
     public void sendHelloBack(InetAddress address){
         JSONObject hello = new JSONObject();
-        hello.put("type", new Integer(0));
+        hello.put("type", new Integer(ChatNI.TYPE_HELLO));
         hello.put("nickname", new String("Bast"));
         hello.put("reqReply", new Boolean(false));
         
@@ -71,7 +71,7 @@ public class UDPSender {
     
     public void sendBye(){
         JSONObject bye = new JSONObject();
-        bye.put("type", new Integer(1));
+        bye.put("type", new Integer(ChatNI.TYPE_BYE));
         bye.put("nickname", new String("Bast"));
         
         this.sendJSON("255.255.255.255", bye);
@@ -79,7 +79,7 @@ public class UDPSender {
     
     public void sendMessage(String address, String s){
         JSONObject message = new JSONObject();
-        message.put("type", new Integer(2));
+        message.put("type", new Integer(ChatNI.TYPE_MESSAGE));
         message.put("nickname", new String("Bast"));
         message.put("message", new String(s));
         this.sendJSON(address, message);

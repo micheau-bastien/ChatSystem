@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem;
+package chatsystem.ni;
 
 import java.net.*;
 import org.json.*;
@@ -13,8 +13,8 @@ import org.json.*;
  * @author Bastien
  */
 public class UDPReceiver {
-    int port = 8045;
-    DatagramSocket socket;
+    private ChatNI chatNI;
+    private DatagramSocket socket;
     DatagramPacket packet;
     byte[] buf = new byte[256];
 
@@ -23,7 +23,7 @@ public class UDPReceiver {
     public UDPReceiver(){
         try {
             packet = new DatagramPacket(buf, buf.length); 
-            socket = new DatagramSocket(port); 
+            socket = new DatagramSocket(ChatNI.PORT); 
             while (true) {
                 socket.receive(packet);
                 String data = new String(packet.getData(), 0, packet.getLength());
@@ -54,7 +54,7 @@ public class UDPReceiver {
     }
     
     private void rcvBye(DatagramPacket packet){
-        
+        //toController : Enlever user de la liste
     }
     
     private void rcvMsg(DatagramPacket packet){
@@ -62,7 +62,22 @@ public class UDPReceiver {
     }
     
     public static void main(String[] args) {
+        
         UDPReceiver receive = new UDPReceiver();
+    }
+
+    /**
+     * @return the socket
+     */
+    public DatagramSocket getSocket() {
+        return socket;
+    }
+
+    /**
+     * @param chatNI the chatNI to set
+     */
+    public void setChatNI(ChatNI chatNI) {
+        this.chatNI = chatNI;
     }
     
 }
