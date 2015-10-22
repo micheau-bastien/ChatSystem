@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem.ni;
+package org.insa.chatsystem.ni;
 
 /**
  *
  * @author Bastien
  */
-public class TCPReceiver extends Thread {
+public class TCPSender extends Thread {
     
 }

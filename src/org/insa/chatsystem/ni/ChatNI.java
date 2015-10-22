@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem.ni;
+package org.insa.chatsystem.ni;
+
+import java.net.DatagramSocket;
 
 /**
  *
@@ -20,12 +22,32 @@ public class ChatNI {
     private TCPServer tcpServer;
     private TCPReceiver tcpReceiver;
     private TCPSender tcpSender;
+    private DatagramSocket socket;
     
     public ChatNI(){
-        this.udpSender = new UDPSender();
-        this.udpReceiver = new UDPReceiver();
+        try {
+            socket = new DatagramSocket(ChatNI.PORT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.udpSender = new UDPSender(socket);
+        this.udpReceiver = new UDPReceiver(socket);
         this.udpReceiver.setChatNI(this);
         this.tcpServer = new TCPServer();
         
+    }
+
+    /**
+     * @return the udpSender
+     */
+    public UDPSender getUdpSender() {
+        return udpSender;
+    }
+
+    /**
+     * @return the udpReceiver
+     */
+    public UDPReceiver getUdpReceiver() {
+        return udpReceiver;
     }
 }

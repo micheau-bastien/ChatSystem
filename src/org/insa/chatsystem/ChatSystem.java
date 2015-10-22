@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem;
+package org.insa.chatsystem;
 
-import chatsystem.ni.UDPReceiver;
-import chatsystem.ni.UDPSender;
+import org.insa.chatsystem.ni.UDPReceiver;
+import org.insa.chatsystem.ni.UDPSender;
 import org.json.*;
 /**
  *

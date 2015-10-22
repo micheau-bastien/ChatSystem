@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chatsystem.ni;
+package org.insa.chatsystem.ni;
 
 import java.net.*;
 import java.nio.charset.Charset;
@@ -18,11 +18,20 @@ public class UDPSender {
     DatagramPacket packet;
     byte[] buf;
     
+    //A supprimer
     public UDPSender(){
         try {
             socket = new DatagramSocket(); 
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+    
+    public UDPSender(DatagramSocket socket){
+        try {
+            this.socket = socket;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
