@@ -7,8 +7,10 @@
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/UDPReceiver.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ChatSystem.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/TCPServer.java</file>
+            <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/test/Test.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/TCPReceiver.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/ChatNI.java</file>
+            <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/controller/ChatController.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/UDPSender.java</file>
         </group>
     </open-files>

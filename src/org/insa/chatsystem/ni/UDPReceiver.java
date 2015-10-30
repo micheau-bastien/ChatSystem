@@ -14,12 +14,12 @@ import org.json.*;
  */
 public class UDPReceiver extends Thread {
     private ChatNI chatNI;
-    private DatagramSocket socket;
-    DatagramPacket packet;
+    private static DatagramSocket socket;
+    private DatagramPacket packet;
     byte[] buf = new byte[256];
-
+    private static UDPReceiver INSTANCE = new UDPReceiver();
     
-    public UDPReceiver(DatagramSocket socket){
+    private UDPReceiver(DatagramSocket socket){
         try {
             this.socket = socket;
             packet = new DatagramPacket(buf, buf.length);
@@ -28,8 +28,17 @@ public class UDPReceiver extends Thread {
         }
     }
     
+    public static UDPReceiver sharedInstance(){
+        return INSTANCE;
+    }
+    
+    public static UDPReceiver sharedInstance(DatagramSocket socket){
+        UDPReceiver.setSocket(socket);
+        return UDPReceiver.INSTANCE;
+    }
+    
     // A supprimer petit à petit
-    public UDPReceiver(){
+    private UDPReceiver(){
         try {
             packet = new DatagramPacket(buf, buf.length); 
             socket = new DatagramSocket(ChatNI.PORT); 
@@ -102,6 +111,13 @@ public class UDPReceiver extends Thread {
      */
     public void setChatNI(ChatNI chatNI) {
         this.chatNI = chatNI;
+    }
+
+    /**
+     * @param socket the socket to set
+     */
+    private static void setSocket(DatagramSocket socket) {
+        UDPReceiver.socket = socket;
     }
     
 }

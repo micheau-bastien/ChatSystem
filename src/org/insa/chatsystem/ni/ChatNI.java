@@ -31,7 +31,7 @@ public class ChatNI {
             e.printStackTrace();
         }
         this.udpSender = new UDPSender(socket);
-        this.udpReceiver = new UDPReceiver(socket);
+        this.udpReceiver = UDPReceiver.sharedInstance(socket);
         this.udpReceiver.setChatNI(this);
         this.tcpServer = new TCPServer();
         
