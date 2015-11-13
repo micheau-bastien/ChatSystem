@@ -5,6 +5,8 @@
  */
 package org.insa.test;
 
+import java.util.Calendar;
+import java.util.Date;
 import org.insa.chatsystem.*;
 import org.insa.chatsystem.ni.ChatNI;
 
@@ -14,10 +16,14 @@ import org.insa.chatsystem.ni.ChatNI;
  */
 public class Test {
     public static void main(String[] args) {
-        ChatNI chatNI = new ChatNI();
+        /*ChatNI chatNI = new ChatNI();
         chatNI.getUdpReceiver().start();
         chatNI.getUdpSender().sendHello();
         chatNI.getUdpSender().sendMessage("localhost", "C'est mon message");
-        chatNI.getUdpSender().sendBye();
+        chatNI.getUdpSender().sendBye();*/
+        Calendar cal = Calendar.getInstance(); // Donne le calendrier à la date d'aujourd'hui
+        Date d = cal.getTime();
+        // 
+        System.out.println(d);
     }
 }

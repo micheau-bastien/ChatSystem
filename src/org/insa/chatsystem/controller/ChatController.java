@@ -5,10 +5,48 @@
  */
 package org.insa.chatsystem.controller;
 
+import java.net.InetAddress;
+import java.net.SocketException;
+import org.insa.chatsystem.ni.*;
+import org.insa.chatsystem.messages.*;
+
 /**
  *
  * @author Bastien
  */
-public class ChatController {
+public class ChatController implements NItoController{
+    private ChatNI chatNI;
+    private ChatControllerToChatNI chatControllerToChatNI;
     
+    public ChatController() throws SocketException {
+        this.chatNI = new ChatNI();
+        
+    }
+
+    @Override
+    public void rcvMessage(InetAddress source, String message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void rcvHello(InetAddress source) {
+        chatControllerToChatNI.sendMessage(source, new MessageHello("bast", false));
+    }
+
+    @Override
+    public void rcvBye(InetAddress source) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void rcvFileReq(InetAddress source, String nomFichier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void rcvReqResp(InetAddress source) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 }

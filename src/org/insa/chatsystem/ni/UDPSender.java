@@ -5,9 +5,11 @@
  */
 package org.insa.chatsystem.ni;
 
+import java.io.IOException;
 import java.net.*;
 import java.nio.charset.Charset;
 import org.json.*;
+import org.insa.chatsystem.messages.*;
 
 /**
  *
@@ -18,15 +20,6 @@ public class UDPSender {
     DatagramPacket packet;
     byte[] buf;
     
-    //A supprimer
-    public UDPSender(){
-        try {
-            socket = new DatagramSocket(); 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    
     public UDPSender(DatagramSocket socket){
         try {
             this.socket = socket;
@@ -36,19 +29,28 @@ public class UDPSender {
     }
     
     // TODO : Faire fonction String2INET
-    private void sendJSON(InetAddress address, JSONObject json){
-        try {
+    private void sendJSON(InetAddress address, JSONObject json) throws IOException {
             buf = json.toString().getBytes(Charset.forName("UTF-8"));
             packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
             socket.send(packet); 
-        } catch (Exception e) {
-            System.out.println("ici ! ");
-            System.out.println(e);
-            e.printStackTrace();
-        }
     }
 
-    private void sendJSON(String address, JSONObject json){
+    // TODO : Faire fonction String2INET
+    public void sendMessage(InetAddress address, Message message) throws IOException{
+            buf = message.toJSON().toString().getBytes(Charset.forName("UTF-8"));
+            packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
+            socket.send(packet);
+    }
+    
+    public void sendMessage(String address, Message message) throws IOException{
+            if(address == "localhost"){
+                this.sendMessage(InetAddress.getLocalHost(), message);
+            }else{
+                this.sendMessage(InetAddress.getByName(address), message);
+            }
+    }
+    
+    public void sendJSON(String address, JSONObject json){
         try {
             if(address == "localhost"){
                 this.sendJSON(InetAddress.getLocalHost(), json);
@@ -58,44 +60,5 @@ public class UDPSender {
             System.out.println(e);
             e.printStackTrace();
         }
-    }
-    
-    public void sendHello(){
-        JSONObject hello = new JSONObject();
-        hello.put("type", new Integer(ChatNI.TYPE_HELLO));
-        hello.put("nickname", new String("Bast"));
-        hello.put("reqReply", new Boolean(true));
-        
-        this.sendJSON("255.255.255.255" ,hello);
-    }
-    
-    public void sendHelloBack(InetAddress address){
-        JSONObject hello = new JSONObject();
-        hello.put("type", new Integer(ChatNI.TYPE_HELLO));
-        hello.put("nickname", new String("Bast"));
-        hello.put("reqReply", new Boolean(false));
-        
-        this.sendJSON(address ,hello);
-    }
-    
-    public void sendBye(){
-        JSONObject bye = new JSONObject();
-        bye.put("type", new Integer(ChatNI.TYPE_BYE));
-        bye.put("nickname", new String("Bast"));
-        
-        this.sendJSON("255.255.255.255", bye);
-    }
-    
-    public void sendMessage(String address, String s){
-        JSONObject message = new JSONObject();
-        message.put("type", new Integer(ChatNI.TYPE_MESSAGE));
-        message.put("nickname", new String("Bast"));
-        message.put("message", new String(s));
-        this.sendJSON(address, message);
-    }
-    
-    public static void main(String[] args) throws Exception {
-        UDPSender sender = new UDPSender();
-        sender.sendHello();
     }
 }

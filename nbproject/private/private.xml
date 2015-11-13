@@ -5,8 +5,11 @@
         <group>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/TCPSender.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/UDPReceiver.java</file>
+            <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/messages/MessageMessage.java</file>
+            <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/test/ToDo.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ChatSystem.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/TCPServer.java</file>
+            <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/messages/MessageReqResp.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/test/Test.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/TCPReceiver.java</file>
             <file>file:/Users/Bastien/NetBeansProjects/ChatSystem/src/org/insa/chatsystem/ni/ChatNI.java</file>

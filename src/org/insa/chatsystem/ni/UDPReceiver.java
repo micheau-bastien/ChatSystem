@@ -19,13 +19,10 @@ public class UDPReceiver extends Thread {
     byte[] buf = new byte[256];
     private static UDPReceiver INSTANCE = new UDPReceiver();
     
-    private UDPReceiver(DatagramSocket socket){
-        try {
-            this.socket = socket;
-            packet = new DatagramPacket(buf, buf.length);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    private UDPReceiverToChatNI udpReceiverToChatNI;
+    
+    private UDPReceiver(){
+        packet = new DatagramPacket(buf, buf.length); 
     }
     
     public static UDPReceiver sharedInstance(){
@@ -33,53 +30,60 @@ public class UDPReceiver extends Thread {
     }
     
     public static UDPReceiver sharedInstance(DatagramSocket socket){
-        UDPReceiver.setSocket(socket);
+        UDPReceiver.socket = socket;
         return UDPReceiver.INSTANCE;
-    }
-    
-    // A supprimer petit à petit
-    private UDPReceiver(){
-        try {
-            packet = new DatagramPacket(buf, buf.length); 
-            socket = new DatagramSocket(ChatNI.PORT); 
-            
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+    }    
     
     // todo : Bouger dans ChatController
     private void rcvHello(DatagramPacket packet){
         String data = new String(packet.getData(), 0, packet.getLength());
         JSONObject dataJSON = new JSONObject(data);
         if(dataJSON.getBoolean("reqReply") == true){
-            UDPSender sender = new UDPSender();
+            UDPSender sender = new UDPSender(this.socket);
             InetAddress adrs = packet.getAddress();
-            sender.sendHelloBack(adrs);
+            //sender.sendHelloBack(adrs);
         }else{
             //Ajouter le mec à la liste des users
         }
     }
 
     @Override
-    public void run() {
+    public void run(){
         try {
             while (true) {
                 socket.receive(this.packet);
                 String data = new String(packet.getData(), 0, packet.getLength());
                 System.out.println(data);
                 JSONObject dataJSON = new JSONObject(data);
-                if(dataJSON.getInt("type") == 0){
-                    this.rcvHello(packet);
-                } else if (dataJSON.getInt("type") == 1){
+                switch (dataJSON.getInt("type")){
+                    case 0 : /*HELLO*/
+                        udpReceiverToChatNI.rcvdHello(packet.getAddress()); 
+                        break;
+                    case 1 : /*BYE*/
+                        udpReceiverToChatNI.rcvdBye(packet.getAddress()); 
+                        break;
+                    case 2 : /*MESSAGE*/
+                        udpReceiverToChatNI.rcvdMessage(packet.getAddress(), dataJSON.getString("message")); 
+                        break;
+                    case 3 : /*REQFILE*/
+                        udpReceiverToChatNI.rcvdFileReq(packet.getAddress(), dataJSON.getString("name")); 
+                        break;
+                    case 4 : /*REPREQ*/
+                        udpReceiverToChatNI.rcvdReqResp(packet.getAddress(), dataJSON.getBoolean("ok")); 
+                        break;    
+                }
+                
+                if(dataJSON.getInt("type") == 0){ /* HELLO */
+                    udpReceiverToChatNI.rcvdHello(packet.getAddress());
+                } else if (dataJSON.getInt("type") == 1){ 
                     this.rcvBye(packet);
                 }else{
                     this.rcvMsg(packet);
                 }
             } 
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        
     }
     
     
@@ -91,12 +95,6 @@ public class UDPReceiver extends Thread {
     // todo : Bouger dans ChatController
     private void rcvMsg(DatagramPacket packet){
         System.out.println(packet);
-    }
-    
-    // A virer
-    public static void main(String[] args) {
-        
-        UDPReceiver receive = new UDPReceiver();
     }
 
     /**
@@ -112,12 +110,4 @@ public class UDPReceiver extends Thread {
     public void setChatNI(ChatNI chatNI) {
         this.chatNI = chatNI;
     }
-
-    /**
-     * @param socket the socket to set
-     */
-    private static void setSocket(DatagramSocket socket) {
-        UDPReceiver.socket = socket;
-    }
-    
 }
