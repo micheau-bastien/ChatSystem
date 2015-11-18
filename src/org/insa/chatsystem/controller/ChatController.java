@@ -30,7 +30,11 @@ public class ChatController implements NItoController{
 
     @Override
     public void rcvHello(InetAddress source) {
-        chatControllerToChatNI.sendMessage(source, new MessageHello("bast", false));
+        try {
+        chatControllerToChatNI.sendMessage(source, new MessageHello("bast", false));            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

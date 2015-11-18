@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.ni;
 
+import com.sun.org.apache.bcel.internal.generic.InstructionConstants;
 import java.net.*;
 import org.json.*;
 
@@ -23,6 +24,10 @@ public class UDPReceiver extends Thread {
     
     private UDPReceiver(){
         packet = new DatagramPacket(buf, buf.length); 
+    }
+    
+    public void setUDPReceiverToChatNI (UDPReceiverToChatNI ni) {
+        
     }
     
     public static UDPReceiver sharedInstance(){

@@ -20,8 +20,9 @@ public class TestMessage {
         try {
             ChatNI chatNI = new ChatNI();
             UDPReceiver receiver = chatNI.getUdpReceiver();
+            receiver.setUDPReceiverToChatNI(chatNI);
             receiver.start();
-            chatNI.getUdpSender().sendMessage(InetAddress.getByName("255.255.255.255"), (Message) new MessageHello("bast", true));
+            chatNI.getUdpSender().sendMessage(InetAddress.getLocalHost(), (Message) new MessageHello("bast", true));
         } catch (Exception e) {
             e.printStackTrace();
         }
