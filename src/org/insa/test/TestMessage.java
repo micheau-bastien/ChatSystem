@@ -20,7 +20,7 @@ public class TestMessage {
     public static void main(String[] args) {
         try {
             ChatController chat = new ChatController();
-            chat.sendHello();
+            
             /*ChatNI chatNI = new ChatNI();
             UDPReceiver receiver = chatNI.getUdpReceiver();
             receiver.setUdpReceiverToChatNI(chatNI);
