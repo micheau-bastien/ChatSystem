@@ -5,8 +5,8 @@
  */
 package org.insa.chatsystem.ni;
 
-import com.sun.org.apache.bcel.internal.generic.InstructionConstants;
 import java.net.*;
+import org.insa.chatsystem.messages.Message;
 import org.json.*;
 
 /**
@@ -14,7 +14,6 @@ import org.json.*;
  * @author Bastien
  */
 public class UDPReceiver extends Thread {
-    private ChatNI chatNI;
     private static DatagramSocket socket;
     private DatagramPacket packet;
     byte[] buf = new byte[256];
@@ -25,11 +24,7 @@ public class UDPReceiver extends Thread {
     private UDPReceiver(){
         packet = new DatagramPacket(buf, buf.length); 
     }
-    
-    public void setUDPReceiverToChatNI (UDPReceiverToChatNI ni) {
-        
-    }
-    
+
     public static UDPReceiver sharedInstance(){
         return INSTANCE;
     }
@@ -48,7 +43,7 @@ public class UDPReceiver extends Thread {
             InetAddress adrs = packet.getAddress();
             //sender.sendHelloBack(adrs);
         }else{
-            //Ajouter le mec à la liste des users
+            // @TODO : Ajouter le mec à la liste des users
         }
     }
 
@@ -60,46 +55,11 @@ public class UDPReceiver extends Thread {
                 String data = new String(packet.getData(), 0, packet.getLength());
                 System.out.println(data);
                 JSONObject dataJSON = new JSONObject(data);
-                switch (dataJSON.getInt("type")){
-                    case 0 : /*HELLO*/
-                        udpReceiverToChatNI.rcvdHello(packet.getAddress()); 
-                        break;
-                    case 1 : /*BYE*/
-                        udpReceiverToChatNI.rcvdBye(packet.getAddress()); 
-                        break;
-                    case 2 : /*MESSAGE*/
-                        udpReceiverToChatNI.rcvdMessage(packet.getAddress(), dataJSON.getString("message")); 
-                        break;
-                    case 3 : /*REQFILE*/
-                        udpReceiverToChatNI.rcvdFileReq(packet.getAddress(), dataJSON.getString("name")); 
-                        break;
-                    case 4 : /*REPREQ*/
-                        udpReceiverToChatNI.rcvdReqResp(packet.getAddress(), dataJSON.getBoolean("ok")); 
-                        break;    
-                }
-                
-                if(dataJSON.getInt("type") == 0){ /* HELLO */
-                    udpReceiverToChatNI.rcvdHello(packet.getAddress());
-                } else if (dataJSON.getInt("type") == 1){ 
-                    this.rcvBye(packet);
-                }else{
-                    this.rcvMsg(packet);
-                }
+                this.udpReceiverToChatNI.rcvdMessage(packet.getAddress(), Message.fromJSON(dataJSON));
             } 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    
-    // todo : Bouger dans ChatController
-    private void rcvBye(DatagramPacket packet){
-        //toController : Enlever user de la liste
-    }
-    
-    // todo : Bouger dans ChatController
-    private void rcvMsg(DatagramPacket packet){
-        System.out.println(packet);
     }
 
     /**
@@ -110,9 +70,9 @@ public class UDPReceiver extends Thread {
     }
 
     /**
-     * @param chatNI the chatNI to set
+     * @param udpReceiverToChatNI the udpReceiverToChatNI to set
      */
-    public void setChatNI(ChatNI chatNI) {
-        this.chatNI = chatNI;
+    public void setUdpReceiverToChatNI(UDPReceiverToChatNI udpReceiverToChatNI) {
+        this.udpReceiverToChatNI = udpReceiverToChatNI;
     }
 }

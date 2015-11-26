@@ -11,7 +11,11 @@ import org.json.JSONObject;
  * @author Bastien
  */
 public class MessageBye extends Message {
-
+    
+    public MessageBye(){
+        this.type = Message.TYPE_HELLO;
+    }
+    
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();

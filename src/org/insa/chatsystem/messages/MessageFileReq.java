@@ -16,6 +16,7 @@ public class MessageFileReq extends Message {
     private String name;
     
     public MessageFileReq (String name){
+        this.type = Message.TYPE_FILEREQ;
         this.name = name;
     }
     
@@ -23,8 +24,15 @@ public class MessageFileReq extends Message {
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();
         json.put("type", new Integer(Message.TYPE_FILEREQ));
-        json.put("name", this.name);
+        json.put("name", this.getName());
         return json;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.controller;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import org.insa.chatsystem.messages.Message;
 
@@ -13,9 +14,5 @@ import org.insa.chatsystem.messages.Message;
  * @author Bastien
  */
 public interface NItoController {
-    void rcvMessage(InetAddress source, String message);
-    void rcvHello(InetAddress source);
-    void rcvBye(InetAddress source);
-    void rcvFileReq(InetAddress source, String nomFichier);
-    void rcvReqResp(InetAddress source);
+    void rcvMessage(InetAddress source, Message message) throws IOException;
 }

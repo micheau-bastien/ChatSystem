@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.controller;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import org.insa.chatsystem.ni.*;
@@ -17,40 +18,48 @@ import org.insa.chatsystem.messages.*;
 public class ChatController implements NItoController{
     private ChatNI chatNI;
     private ChatControllerToChatNI chatControllerToChatNI;
+    private String nickname = "Bast"; //@TODO : A DEFINIR
     
     public ChatController() throws SocketException {
         this.chatNI = new ChatNI();
+        this.chatControllerToChatNI = this.chatNI;
+        start();
+    }
+    
+    private void start() {
+        this.chatNI.setNiToController(this);
+    }
+
+    public void sendHello() throws IOException {
+        this.chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.nickname, true));
+    }
+    
+    @Override
+    public void rcvMessage(InetAddress source, Message message) throws IOException {
         
-    }
-
-    @Override
-    public void rcvMessage(InetAddress source, String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void rcvHello(InetAddress source) {
-        try {
-        chatControllerToChatNI.sendMessage(source, new MessageHello("bast", false));            
-        } catch (Exception e) {
-            e.printStackTrace();
+        switch (message.getType()){
+            case Message.TYPE_HELLO : /*HELLO*/
+                //Ajouter le gars à la liste des utilisateurs
+                if(((MessageHello)message).isReqReply()){
+                    chatControllerToChatNI.sendMessage(source, new MessageHello(this.nickname, false));
+                }
+                break;
+            case Message.TYPE_BYE : /*BYE*/
+                // sortir le gars de la liste des users
+                break;
+            case Message.TYPE_MESSAGE : /*MESSAGE*/
+                // afficher le message à l'user
+                break;
+            case Message.TYPE_FILEREQ : /*FILEREQ*/
+                // A gérer 
+                break;
+            case Message.TYPE_FILEREQRESP : /*REQRESP*/
+                // Envoyer fichier 
+                break;
+            default : 
+                // @TODO : mettre une erreur type message
+                message = null;
+                break;
         }
     }
-
-    @Override
-    public void rcvBye(InetAddress source) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void rcvFileReq(InetAddress source, String nomFichier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void rcvReqResp(InetAddress source) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
 }

@@ -17,14 +17,22 @@ public class MessageMessage extends Message {
     
     public MessageMessage (String message){
         this.message = message;
+        this.type = Message.TYPE_MESSAGE;
     }
     
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();
         json.put("type", new Integer(Message.TYPE_MESSAGE));
-        json.put("message", this.message);
+        json.put("message", this.getMessage());
         return json;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
     }
     
 }

@@ -17,14 +17,22 @@ public class MessageReqResp extends Message {
     
     public MessageReqResp (boolean ok){
         this.ok = ok;
+        this.type = Message.TYPE_FILEREQRESP;
     }
     
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();
         json.put("type", new Integer(Message.TYPE_FILEREQRESP));
-        json.put("ok", this.ok);
+        json.put("ok", this.isOk());
         return json;
+    }
+
+    /**
+     * @return the ok
+     */
+    public boolean isOk() {
+        return ok;
     }
     
 }

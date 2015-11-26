@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.ni;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import org.insa.chatsystem.messages.Message;
@@ -14,9 +15,5 @@ import org.insa.chatsystem.messages.Message;
  * @author Bastien
  */
 public interface UDPReceiverToChatNI {
-    void rcvdHello(InetAddress source);
-    void rcvdBye (InetAddress source);
-    void rcvdFileReq(InetAddress source, String nameFile);
-    void rcvdMessage(InetAddress source, String message);
-    void rcvdReqResp(InetAddress source, boolean ok);
+    void rcvdMessage(InetAddress source, Message message) throws IOException;
 }

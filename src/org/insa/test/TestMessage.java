@@ -6,6 +6,7 @@
 package org.insa.test;
 
 import java.net.InetAddress;
+import org.insa.chatsystem.controller.ChatController;
 import org.insa.chatsystem.messages.*;
 import org.insa.chatsystem.ni.*;
 
@@ -18,11 +19,13 @@ import org.insa.chatsystem.ni.*;
 public class TestMessage {
     public static void main(String[] args) {
         try {
-            ChatNI chatNI = new ChatNI();
+            ChatController chat = new ChatController();
+            chat.sendHello();
+            /*ChatNI chatNI = new ChatNI();
             UDPReceiver receiver = chatNI.getUdpReceiver();
-            receiver.setUDPReceiverToChatNI(chatNI);
-            receiver.start();
-            chatNI.getUdpSender().sendMessage(InetAddress.getLocalHost(), (Message) new MessageHello("bast", true));
+            receiver.setUdpReceiverToChatNI(chatNI);
+            receiver.start();*/
+            //chatNI.getUdpSender().sendMessage(InetAddress.getLocalHost(), (Message) new MessageHello("bast", true));
         } catch (Exception e) {
             e.printStackTrace();
         }

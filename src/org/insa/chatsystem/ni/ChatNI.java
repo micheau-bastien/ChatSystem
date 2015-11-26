@@ -28,12 +28,14 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
     
     private NItoController niToController;
     
+    // @TODO : faire une méthode démarre qui fait les fonction dans lesquelles on passe this en arg
     public ChatNI() throws SocketException{
         socket = new DatagramSocket(ChatNI.PORT);
         this.udpSender = new UDPSender(this.socket);
         this.udpReceiver = UDPReceiver.sharedInstance(this.socket); // CECI EST UN NEW 
-        this.udpReceiver.setChatNI(this);
+        this.udpReceiver.setUdpReceiverToChatNI(this);
         this.tcpServer = new TCPServer();
+        this.udpReceiver.start();
     }
 
     /**
@@ -51,33 +53,20 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
     }
 
     @Override
-    public void rcvdHello(InetAddress source) {
-        niToController.rcvHello(source);
-    }
-
-    @Override
-    public void rcvdBye(InetAddress source) {
-        niToController.rcvBye(source);
-    }
-
-    @Override
-    public void rcvdFileReq(InetAddress source, String nameFile) {
-        niToController.rcvFileReq(source, nameFile);
-    }
-
-    @Override
-    public void rcvdMessage(InetAddress source, String message) {
-        niToController.rcvMessage(source, message);
-    }
-
-    @Override
-    public void rcvdReqResp(InetAddress source, boolean ok) {
-        niToController.rcvReqResp(source);
+    public void rcvdMessage(InetAddress source, Message message) throws IOException {
+        this.niToController.rcvMessage(source, message);
     }
 
     @Override
     public void sendMessage(InetAddress destination, Message message) throws IOException{
         this.udpSender.sendMessage(destination, message);
+    }
+
+    /**
+     * @param niToController the niToController to set
+     */
+    public void setNiToController(NItoController niToController) {
+        this.niToController = niToController;
     }
 
  
