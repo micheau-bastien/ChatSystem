@@ -5,10 +5,25 @@
  */
 package org.insa.chatsystem.gui;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  *
  * @author Bastien
  */
-public class GUI {
+public abstract class GUI extends JFrame {
     
+    public GUI() {
+        this.setTitle("Ma première fenêtre Java");
+        this.setSize(400, 100);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(true);
+    }
+    
+    public void draw(){
+        this.setVisible(true);
+    }    
 }
