@@ -15,8 +15,10 @@ import org.insa.chatsystem.controller.*;
  *
  * @author Bastien
  */
-public abstract class GUI extends JFrame implements ControllerToGUI {
+public class GUI extends JFrame implements ControllerToGUI {
     protected GuiToController guiToController;
+    private JPanel panel;
+    
     
     public GUI() throws SocketException {
         this.guiToController = new ChatController();
@@ -29,4 +31,23 @@ public abstract class GUI extends JFrame implements ControllerToGUI {
     public void draw(){
         this.setVisible(true);
     }    
+
+    @Override
+    public void printMessage(String Message, String nicknameExp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * @return the panel
+     */
+    private JPanel getPanel() {
+        return panel;
+    }
+
+    /**
+     * @param panel the panel to set
+     */
+    private void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
 }
