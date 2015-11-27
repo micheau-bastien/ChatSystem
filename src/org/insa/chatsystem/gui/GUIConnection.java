@@ -5,8 +5,8 @@
  */
 package org.insa.chatsystem.gui;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.IOException;
 import java.net.SocketException;
 
 /**
@@ -28,11 +28,14 @@ public class GUIConnection extends JPanel implements ActionListener{
         this.connectButton = new JButton("Connect");
         connectButton.addActionListener(this);
         this.add(connectButton);
-        System.out.println("coucou"+this.nicknameTextField.getText());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        gUIConnectionToGUI.connect(this.nicknameTextField.getText());
+        try {
+            gUIConnectionToGUI.connect(this.nicknameTextField.getText());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

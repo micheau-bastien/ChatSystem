@@ -5,11 +5,13 @@
  */
 package org.insa.chatsystem.controller;
 
+import java.io.IOException;
+
 /**
  *
  * @author Bastien
  */
 public interface GuiToController {
-    public void connect(String nickname);
+    public void connect(String nickname)  throws IOException ;
     public void sendMessage(String nickname);
 }
