@@ -24,3 +24,7 @@ build/classes/org/insa/chatsystem/controller/ChatController.class
 *.class
 
 *.class
+
+nbproject/private/private.properties
+
+nbproject/private/private.properties
