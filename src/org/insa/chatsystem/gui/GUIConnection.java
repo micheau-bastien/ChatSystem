@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.SocketException;
-import org.insa.chatsystem.controller.GuiToController;
 
 /**
  *
@@ -17,7 +16,7 @@ import org.insa.chatsystem.controller.GuiToController;
 public class GUIConnection extends JPanel implements ActionListener{
     private final JTextField nicknameTextField;
     private final JButton connectButton;
-    private GUIConnectionToGUI gUIConnectionToGUI;
+    private final GUIConnectionToGUI gUIConnectionToGUI;
     
     public GUIConnection(GUIConnectionToGUI gUIConnectionToGUI) throws SocketException{
         this.gUIConnectionToGUI = gUIConnectionToGUI;
@@ -29,6 +28,7 @@ public class GUIConnection extends JPanel implements ActionListener{
         this.connectButton = new JButton("Connect");
         connectButton.addActionListener(this);
         this.add(connectButton);
+        System.out.println("coucou"+this.nicknameTextField.getText());
     }
 
     @Override

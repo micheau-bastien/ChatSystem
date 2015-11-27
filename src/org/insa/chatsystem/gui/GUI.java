@@ -17,12 +17,11 @@ import org.insa.chatsystem.controller.*;
  */
 public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
     private GuiToController guiToController;
-    private JPanel panel;
     
     
     public GUI() throws SocketException {
         this.guiToController = new ChatController();
-        this.setSize(400, 100);
+        //this.setSize(250, 400);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
@@ -38,17 +37,11 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
     }
 
     /**
-     * @return the panel
-     */
-    public JPanel getPanel() {
-        return panel;
-    }
-
-    /**
      * @param panel the panel to set
      */
     public void setPanel(JPanel panel) {
-        this.panel = panel;
+        this.setContentPane(panel);
+        this.pack();
     }
 
     /**
