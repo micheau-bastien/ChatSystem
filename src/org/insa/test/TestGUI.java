@@ -17,14 +17,12 @@ import org.insa.chatsystem.gui.*;
  */
 public class TestGUI {
     public static void main(String[] args){       
-        //GUI fenetre = new GUI();
-        JPanel pan = new JPanel();
-        pan.add(new JTextField());
-        JButton bouton = new JButton();
-        bouton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent event){
-                System.out.println("");
-            }
-        });
+        try {
+            GUI fenetre = new GUI();
+            fenetre.setPanel(new GUIConnection(fenetre));
+            fenetre.draw();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }   
 }
