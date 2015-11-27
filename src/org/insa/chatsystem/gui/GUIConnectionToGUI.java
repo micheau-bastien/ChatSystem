@@ -5,11 +5,13 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.io.IOException;
+
 /**
  *
  * @author Bastien
  */
 public interface GUIConnectionToGUI {
-    public void connect(String nickname);
+    public void connect(String nickname)  throws IOException ;
     
 }

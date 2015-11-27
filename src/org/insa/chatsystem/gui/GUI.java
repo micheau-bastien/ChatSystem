@@ -6,9 +6,7 @@
 package org.insa.chatsystem.gui;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.SocketException;
 import org.insa.chatsystem.controller.*;
 /**
@@ -16,7 +14,7 @@ import org.insa.chatsystem.controller.*;
  * @author Bastien
  */
 public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
-    private GuiToController guiToController;
+    private final GuiToController guiToController;
     
     
     public GUI() throws SocketException {
@@ -25,9 +23,12 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
+        this.setContentPane(new GUIConnection(this));
+        this.draw();
     }
     
     public void draw(){
+        this.pack();
         this.setVisible(true);
     }    
 
@@ -41,7 +42,6 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
      */
     public void setPanel(JPanel panel) {
         this.setContentPane(panel);
-        this.pack();
     }
 
     /**
@@ -52,7 +52,10 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
     }
 
     @Override
-    public void connect(String nickname) {
+    public void connect(String nickname)  throws IOException  {
         this.guiToController.connect(nickname);
+        System.out.println("On lance la GUI Connected ! ");
+        this.setContentPane(new GUIConnected());
+        this.draw();
     }
 }

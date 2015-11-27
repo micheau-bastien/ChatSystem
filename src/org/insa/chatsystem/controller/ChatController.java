@@ -64,8 +64,11 @@ public class ChatController implements NItoController, GuiToController{
     }
 
     @Override
-    public void connect(String nickname) {
+    public void connect(String nickname) throws IOException {
         System.out.println(nickname);
+        //AddUser
+        this.nickname = nickname;
+        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.nickname, true));
     }
 
     @Override

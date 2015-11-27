@@ -5,11 +5,6 @@
  */
 package org.insa.test;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import org.insa.chatsystem.gui.*;
 /**
  *
@@ -19,8 +14,6 @@ public class TestGUI {
     public static void main(String[] args){       
         try {
             GUI fenetre = new GUI();
-            fenetre.setPanel(new GUIConnection(fenetre));
-            fenetre.draw();
         } catch (Exception e) {
             e.printStackTrace();
         }
