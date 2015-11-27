@@ -10,3 +10,13 @@ nbproject/private/private.xml
 *.properties
 
 *.properties
+
+*.class
+
+build/classes/.netbeans_automatic_build
+
+build/classes/.netbeans_update_resources
+
+build/classes/org/insa/chatsystem/controller/ChatController.class
+
+build/classes/org/insa/chatsystem/controller/ChatController.class

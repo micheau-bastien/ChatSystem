@@ -4,35 +4,35 @@
  * and open the template in the editor.
  */
 package org.insa.chatsystem.gui;
-import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.SocketException;
-import sun.awt.VerticalBagLayout;
+import org.insa.chatsystem.controller.GuiToController;
 
 /**
  *
  * @author Bastien
  */
-public class GUIConnection extends GUI{
-    public GUIConnection() throws SocketException{
-        JTextField nicknameTextField = new JTextField("nickname");
-        this.getContentPane().add(nicknameTextField);
-        
-        this.setLayout(new VerticalBagLayout());
+public class GUIConnection extends JPanel implements ActionListener{
+    private final JTextField nicknameTextField;
+    private final JButton connectButton;
+    private GUIConnectionToGUI gUIConnectionToGUI;
+    
+    public GUIConnection(GUIConnectionToGUI gUIConnectionToGUI) throws SocketException{
+        this.gUIConnectionToGUI = gUIConnectionToGUI;
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(new JLabel("User Name"));
+        this.nicknameTextField = new JTextField("nickname");
+        this.add(nicknameTextField);
 
-        JButton connectButton = new JButton("Connect");
-        connectButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent event){
-                System.out.println("");
-            }
-        });
-        this.getContentPane().add(connectButton);
+        this.connectButton = new JButton("Connect");
+        connectButton.addActionListener(this);
+        this.add(connectButton);
     }
 
     @Override
-    public void printMessage(String Message, String nicknameExp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void actionPerformed(ActionEvent e) {
+        gUIConnectionToGUI.connect(this.nicknameTextField.getText());
     }
 }

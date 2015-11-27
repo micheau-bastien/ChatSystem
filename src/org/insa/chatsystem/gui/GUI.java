@@ -15,8 +15,8 @@ import org.insa.chatsystem.controller.*;
  *
  * @author Bastien
  */
-public class GUI extends JFrame implements ControllerToGUI {
-    protected GuiToController guiToController;
+public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
+    private GuiToController guiToController;
     private JPanel panel;
     
     
@@ -40,14 +40,26 @@ public class GUI extends JFrame implements ControllerToGUI {
     /**
      * @return the panel
      */
-    private JPanel getPanel() {
+    public JPanel getPanel() {
         return panel;
     }
 
     /**
      * @param panel the panel to set
      */
-    private void setPanel(JPanel panel) {
+    public void setPanel(JPanel panel) {
         this.panel = panel;
+    }
+
+    /**
+     * @return the guiToController
+     */
+    public GuiToController getGuiToController() {
+        return guiToController;
+    }
+
+    @Override
+    public void connect(String nickname) {
+        this.guiToController.connect(nickname);
     }
 }
