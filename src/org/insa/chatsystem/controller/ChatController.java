@@ -8,8 +8,10 @@ package org.insa.chatsystem.controller;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import org.insa.chatsystem.ni.*;
 import org.insa.chatsystem.messages.*;
+import org.insa.chatsystem.users.*;
 
 /**
  *
@@ -18,9 +20,11 @@ import org.insa.chatsystem.messages.*;
 public class ChatController implements NItoController, GuiToController{
     private ChatNI chatNI;
     private ChatControllerToChatNI chatControllerToChatNI;
-    private String nickname = "Bast"; //@TODO : A DEFINIR
+    private User localUser;
+    private UserList userList;
     
-    public ChatController() throws SocketException {
+    public ChatController() throws SocketException, UnknownHostException {
+        this.userList = new UserList();
         this.chatNI = new ChatNI();
         this.chatControllerToChatNI = this.chatNI;
         start();
@@ -39,9 +43,10 @@ public class ChatController implements NItoController, GuiToController{
         
         switch (message.getType()){
             case Message.TYPE_HELLO : /*HELLO*/
+                this.userList.addUser(new User(((MessageHello)message).getNickname(), source));
                 //Ajouter le gars à la liste des utilisateurs
                 if(((MessageHello)message).isReqReply()){
-                    chatControllerToChatNI.sendMessage(source, new MessageHello(this.nickname, false));
+                    chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
                 }
                 break;
             case Message.TYPE_BYE : /*BYE*/
@@ -67,7 +72,7 @@ public class ChatController implements NItoController, GuiToController{
     public void connect(String nickname) throws IOException {
         System.out.println(nickname);
         //AddUser
-        this.nickname = nickname;
+        this.userList.addUser(new User(nickname, InetAddress.getLocalHost()));
         chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.nickname, true));
     }
 
