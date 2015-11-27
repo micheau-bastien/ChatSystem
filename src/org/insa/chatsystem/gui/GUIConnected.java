@@ -19,7 +19,7 @@ import java.net.SocketException;
 public class GUIConnected extends JPanel implements ActionListener{
     
     public GUIConnected() {
-       this.set
+       this.set   hgfhjgjhg jgjhghjfg
     }
     
 
