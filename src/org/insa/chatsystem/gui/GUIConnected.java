@@ -20,10 +20,11 @@ public class GUIConnected extends JPanel implements ActionListener{
     
     public GUIConnected() {
         JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        hPane.setLeftComponent(new JLabel("coucou"));
+        //peut passer les composants en 2eme et 3eme args
+        hPane.setLeftComponent(new JTabbedPane());
         hPane.setRightComponent(new JLabel("hello"));
         
-        // setLayout(new BoxLayout (this, BoxLayout.X_AXIS));
+        setLayout(new BoxLayout (this, BoxLayout.X_AXIS));
         add(hPane);
     }
     
