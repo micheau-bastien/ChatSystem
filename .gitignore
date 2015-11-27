@@ -28,3 +28,13 @@ build/classes/org/insa/chatsystem/controller/ChatController.class
 nbproject/private/private.properties
 
 nbproject/private/private.properties
+
+*.properties
+
+*.properties
+
+build/built-jar.properties
+
+build/classes/.netbeans_automatic_build
+
+*.class
