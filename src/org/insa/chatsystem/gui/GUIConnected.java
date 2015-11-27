@@ -6,20 +6,41 @@
 package org.insa.chatsystem.gui;
 
 import java.net.SocketException;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.SocketException;
 
 /**
- *
+ * 
  * @author Bastien
  */
-public class GUIConnected extends GUI {
-    public GUIConnected() throws SocketException {
-        //Ajouter l'user dans le titre de la fenêtre
-        this.setTitle("Chat Système");
-        this.setSize(400, 500);
-        this.setLocationRelativeTo(null);
+public class GUIConnected extends JPanel implements ActionListener{
+    
+    public GUIConnected() {
+       
     }
     
-    public void printMessage(String Message, String nicknameExp) {
-        // TODO
-    };
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    
+    
+    
+public static void main(String[] args){       
+        JPanel pan = new JPanel();
+        pan.add(new JTextField());
+        JButton bouton = new JButton();
+        bouton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                System.out.println("");
+            }
+        });
+    }
 }
