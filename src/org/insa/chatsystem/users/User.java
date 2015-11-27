@@ -34,4 +34,9 @@ public class User {
     public InetAddress getAddress() {
         return address;
     }
+    
+    @Override
+    public String toString(){
+        return this.getNickname();
+    }
 }

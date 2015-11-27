@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Bastien
  */
-public class UserList {
+public class UserList{
     private ArrayList<User> userList;
     
     public UserList() throws UnknownHostException {
@@ -22,37 +22,44 @@ public class UserList {
     }
     
     public void addUser(User user){
-        this.userList.add(user);
+        this.getUserList().add(user);
     }
     
     public void removeUser(User user){
-        this.userList.remove(user);
+        this.getUserList().remove(user);
     }
     
     public User searchUser(String nickname){
         int n=0;
-        while(this.userList.get(n).getNickname() != nickname && n <= this.userList.size()){
+        while(this.getUserList().get(n).getNickname() != nickname && n <= this.getUserList().size()){
             n++;
         }
-        if (n > this.userList.size()){
+        if (n > this.getUserList().size()){
             // @TODO : NullPointerException
             return null;
         }else{
-            return this.userList.get(n);
+            return this.getUserList().get(n);
         }
     }
     
     public User searchUser(InetAddress address){
         int n=0;
-        while(this.userList.get(n).getAddress()!= address && n <= this.userList.size()){
+        while(this.getUserList().get(n).getAddress()!= address && n <= this.getUserList().size()){
             n++;
         }
-        if (n > this.userList.size()){
+        if (n > this.getUserList().size()){
             // @TODO : NullPointerException
             return null;
         }else{
-            return this.userList.get(n);
+            return this.getUserList().get(n);
         }
+    }
+
+    /**
+     * @return the userList
+     */
+    public ArrayList<User> getUserList() {
+        return userList;
     }
     
 }

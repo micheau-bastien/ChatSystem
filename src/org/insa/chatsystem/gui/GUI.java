@@ -8,6 +8,7 @@ package org.insa.chatsystem.gui;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import org.insa.chatsystem.controller.*;
 /**
  *
@@ -17,7 +18,7 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
     private final GuiToController guiToController;
     
     
-    public GUI() throws SocketException {
+    public GUI() throws SocketException, UnknownHostException {
         this.guiToController = new ChatController();
         //this.setSize(250, 400);
         this.setLocationRelativeTo(null);

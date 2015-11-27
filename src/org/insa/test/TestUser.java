@@ -6,6 +6,8 @@
 package org.insa.test;
 
 import java.net.InetAddress;
+import org.insa.chatsystem.gui.GUI;
+import org.insa.chatsystem.gui.TESTList;
 import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 
@@ -28,6 +30,13 @@ public class TestUser {
             User searched = userList.searchUser("Bast");
             System.out.println(bast);
             System.out.println(searched);
+            searched = userList.searchUser(InetAddress.getLocalHost());
+            System.out.println(bast);
+            
+            GUI fenetre = new GUI();
+            TESTList list = new TESTList(userList);
+            fenetre.setPanel(list);
+            fenetre.draw();
         } catch (Exception e) {
             e.printStackTrace();
         }

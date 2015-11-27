@@ -21,10 +21,10 @@ public class ChatController implements NItoController, GuiToController{
     private ChatNI chatNI;
     private ChatControllerToChatNI chatControllerToChatNI;
     private User localUser;
-    private UserList userList;
+    private UserList connectedUserList;
     
     public ChatController() throws SocketException, UnknownHostException {
-        this.userList = new UserList();
+        this.connectedUserList = new UserList();
         this.chatNI = new ChatNI();
         this.chatControllerToChatNI = this.chatNI;
         start();
@@ -35,7 +35,7 @@ public class ChatController implements NItoController, GuiToController{
     }
 
     public void sendHello() throws IOException {
-        this.chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.nickname, true));
+        this.chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
     }
     
     @Override
@@ -43,14 +43,15 @@ public class ChatController implements NItoController, GuiToController{
         
         switch (message.getType()){
             case Message.TYPE_HELLO : /*HELLO*/
-                this.userList.addUser(new User(((MessageHello)message).getNickname(), source));
-                //Ajouter le gars à la liste des utilisateurs
+                // Ajouter l'expéditeur à la liste des users
+                this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
                 if(((MessageHello)message).isReqReply()){
                     chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
                 }
                 break;
             case Message.TYPE_BYE : /*BYE*/
                 // sortir le gars de la liste des users
+                this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
                 break;
             case Message.TYPE_MESSAGE : /*MESSAGE*/
                 // afficher le message à l'user
@@ -72,8 +73,8 @@ public class ChatController implements NItoController, GuiToController{
     public void connect(String nickname) throws IOException {
         System.out.println(nickname);
         //AddUser
-        this.userList.addUser(new User(nickname, InetAddress.getLocalHost()));
-        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.nickname, true));
+        this.connectedUserList.addUser(new User(nickname, InetAddress.getLocalHost()));
+        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
     }
 
     @Override
