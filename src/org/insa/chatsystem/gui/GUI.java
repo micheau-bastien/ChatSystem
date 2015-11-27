@@ -9,14 +9,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.SocketException;
+import org.insa.chatsystem.controller.*;
 /**
  *
  * @author Bastien
  */
-public abstract class GUI extends JFrame {
+public abstract class GUI extends JFrame implements ControllerToGUI {
+    protected GuiToController guiToController;
     
-    public GUI() {
-        this.setTitle("Ma première fenêtre Java");
+    public GUI() throws SocketException {
+        this.guiToController = new ChatController();
         this.setSize(400, 100);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -15,7 +15,7 @@ import org.insa.chatsystem.messages.*;
  *
  * @author Bastien
  */
-public class ChatController implements NItoController{
+public class ChatController implements NItoController, GuiToController{
     private ChatNI chatNI;
     private ChatControllerToChatNI chatControllerToChatNI;
     private String nickname = "Bast"; //@TODO : A DEFINIR
@@ -61,5 +61,15 @@ public class ChatController implements NItoController{
                 message = null;
                 break;
         }
+    }
+
+    @Override
+    public void connect(String nickname) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void sendMessage(String nickname) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
