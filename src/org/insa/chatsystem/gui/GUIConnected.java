@@ -23,7 +23,7 @@ public class GUIConnected extends JPanel implements ActionListener{
         hPane.setLeftComponent(new JLabel("coucou"));
         hPane.setRightComponent(new JLabel("hello"));
         
-        setLayout(new BoxLayout (this, BoxLayout.X_AXIS));
+        // setLayout(new BoxLayout (this, BoxLayout.X_AXIS));
         add(hPane);
     }
     
