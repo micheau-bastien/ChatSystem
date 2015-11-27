@@ -19,28 +19,17 @@ import java.net.SocketException;
 public class GUIConnected extends JPanel implements ActionListener{
     
     public GUIConnected() {
-       
+        JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        hPane.setLeftComponent(new JLabel("coucou"));
+        hPane.setRightComponent(new JLabel("hello"));
+        
+        // setLayout(new BoxLayout (this, BoxLayout.X_AXIS));
+        add(hPane);
     }
     
 
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-    
-    
-    
-    
-public static void main(String[] args){       
-        JPanel pan = new JPanel();
-        pan.add(new JTextField());
-        JButton bouton = new JButton();
-        bouton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent event){
-                System.out.println("");
-            }
-        });
     }
 }

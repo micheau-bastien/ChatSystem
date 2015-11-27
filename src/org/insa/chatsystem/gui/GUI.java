@@ -41,6 +41,7 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
      * @param panel the panel to set
      */
     public void setPanel(JPanel panel) {
+        this.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         this.setContentPane(panel);
     }
 
