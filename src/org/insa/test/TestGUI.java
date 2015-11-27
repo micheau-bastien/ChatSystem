@@ -16,7 +16,7 @@ import org.insa.chatsystem.gui.*;
  * @author Bastien
  */
 public class TestGUI {
-        public static void main(String[] args){       
+    public static void main(String[] args){       
         //GUI fenetre = new GUI();
         JPanel pan = new JPanel();
         pan.add(new JTextField());

@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.insa.chatsystem.gui;
+package org.insa.chatsystem.controller;
 
 /**
  *
  * @author Bastien
  */
-public interface ControllerToGUI {
-    public void printMessage(String Message, String nicknameExp);
+public interface GuiToController {
+    public void connect(String nickname);
+    public void sendMessage(String nickname);
 }
