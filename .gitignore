@@ -7,34 +7,19 @@ nbproject/private/private.xml
 
 nbproject/private/private.xml
 
-*.properties
-
-*.properties
-
 *.class
 
 build/classes/.netbeans_automatic_build
 
 build/classes/.netbeans_update_resources
 
-build/classes/org/insa/chatsystem/controller/ChatController.class
+build/classes/org/insa/chatsystem/controller/*.class
 
-build/classes/org/insa/chatsystem/controller/ChatController.class
+nbproject/private/*.properties
 
-*.class
-
-*.class
-
-nbproject/private/private.properties
-
-nbproject/private/private.properties
-
-*.properties
-
-*.properties
-
-build/built-jar.properties
+build/*.properties
 
 build/classes/.netbeans_automatic_build
+
 
 *.class
