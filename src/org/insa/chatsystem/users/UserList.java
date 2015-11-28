@@ -14,8 +14,12 @@ import java.util.ArrayList;
  * @author Bastien
  */
 public class UserList{
-    private ArrayList<User> userList;
+    private final ArrayList<User> userList;
     
+    /**
+     *
+     * @throws UnknownHostException
+     */
     public UserList() throws UnknownHostException {
         this.userList = new ArrayList<User>();
         this.userList.add(new User("All", InetAddress.getByName("255.255.255.255")));
