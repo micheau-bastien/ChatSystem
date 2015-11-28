@@ -24,8 +24,8 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
-        //this.setContentPane(new GUIConnection(this));
-        //this.draw();
+        this.setContentPane(new GUIConnection(this));
+        this.draw();
     }
     
     public void draw(){
