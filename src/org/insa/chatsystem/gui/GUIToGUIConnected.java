@@ -5,14 +5,10 @@
  */
 package org.insa.chatsystem.gui;
 
-import org.insa.chatsystem.users.UserList;
-
 /**
  *
- * @author Bastien
+ * @author laure
  */
-public interface ControllerToGUI {
-    public void printMessage(String Message, String nicknameExp);
-    public UserList userList();
-    public void user();
+public interface GUIToGUIConnected {
+    
 }

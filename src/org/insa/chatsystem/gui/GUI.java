@@ -10,11 +10,12 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import org.insa.chatsystem.controller.*;
+import org.insa.chatsystem.users.UserList;
 /**
  *
  * @author Bastien
  */
-public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
+public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, GUIConnectedToGUI {
     private final GuiToController guiToController;
     
     
@@ -55,9 +56,19 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI {
 
     @Override
     public void connect(String nickname)  throws IOException  {
-        this.guiToController.connect(nickname);
+        //this.guiToController.connect(nickname);
         System.out.println("On lance la GUI Connected ! ");
         this.setContentPane(new GUIConnected());
         this.draw();
+    }
+
+    @Override
+    public UserList userList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void user() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -14,4 +14,7 @@ import java.io.IOException;
 public interface GuiToController {
     public void connect(String nickname)  throws IOException ;
     public void sendMessage(String nickname);
+    
+    //Throws exception ?
+    public void logout();
 }

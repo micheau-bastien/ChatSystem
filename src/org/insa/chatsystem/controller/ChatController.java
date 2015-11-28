@@ -74,11 +74,16 @@ public class ChatController implements NItoController, GuiToController{
         System.out.println(nickname);
         //AddUser
         this.connectedUserList.addUser(new User(nickname, InetAddress.getLocalHost()));
-        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
+        //chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
     }
 
     @Override
     public void sendMessage(String nickname) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void logout() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
