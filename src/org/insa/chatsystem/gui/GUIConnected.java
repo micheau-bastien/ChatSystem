@@ -65,9 +65,9 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
         leftPan.add(logoutButton, BorderLayout.SOUTH);
         
         hPane.setLeftComponent(leftPan);
-        
+        hPane.setSize(700, 700);
         add(hPane);
-        
+                
     }
     
 
