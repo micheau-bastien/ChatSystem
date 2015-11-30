@@ -21,5 +21,5 @@ public interface GuiToController {
     //Throws exception ?
     public void logout();
 
-    public ArrayList<User> getUserList();
+    public UserList getUserList();
 }

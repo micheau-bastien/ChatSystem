@@ -65,7 +65,7 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
     }
 
     @Override
-    public ArrayList<User> userList() {
+    public UserList fetchUserList() {
         return guiToController.getUserList();
     }
 

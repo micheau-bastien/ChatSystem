@@ -15,6 +15,5 @@ import org.insa.chatsystem.users.UserList;
  */
 public interface ControllerToGUI {
     public void printMessage(String Message, String nicknameExp);
-    public ArrayList<User> userList();
     public void user();
 }

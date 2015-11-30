@@ -35,8 +35,8 @@ public class ChatController implements NItoController, GuiToController{
         this.chatNI.setNiToController(this);
     }
 
-    public ArrayList<User> getUserList(){
-        return this.connectedUserList.getUserList();
+    public UserList getUserList(){
+        return this.connectedUserList;
     }
     
     public void sendHello() throws IOException {
