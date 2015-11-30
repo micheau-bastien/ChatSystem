@@ -11,13 +11,18 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.SocketException;
+import java.util.ArrayList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import org.insa.chatsystem.users.User;
 
 /**
  * 
  * @author Laure 
 */
-public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConnected {
+public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConnected, ListSelectionListener {
     
+    private GUIConnectedToGUI gUIConnectedToGUI;
     private final JButton logoutButton;
     private JButton chatWith = new JButton("Chat With");
     //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
@@ -27,11 +32,31 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
      
     private int tabCounter = 0;
     
+    
+    ///////////////////////////TEST POUR LA USER LIST///////////////
+    private JList liste = new JList();
+    private JLabel etiquette = new JLabel("Connected User List");
+    private String choix[] = {" Pierre:192.256.5.6", " Paul:129.168.45.3", " Jacques", " Lou", " Marie"};
+    
+    
+    
     public GUIConnected() {
         // PB : taille de la fenêtre pas bonne, et le panel ne se resize pas comme il faut
         
+        ///////////////////TEST LIST//////////////////////////
+        liste = new JList(choix);
+        liste.addListSelectionListener(this);
+        
+       
+        ///////////////////TEST LIST//////////////////////////
+
+        
+        
+        
+        
         chatWith.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                //Il faut rajouter la valeur du champ user sélectionné
                 newChatTab();
             }
         });
@@ -51,16 +76,22 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
        
         JPanel leftPan = new JPanel();
         leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
-        leftPan.add(new JLabel("User List: "));
-        leftPan.add(new JLabel("-User1 \n-User2"));
+        //leftPan.add(new JLabel("User List: "));
+        //leftPan.add(new JLabel("-User1 \n-User2"));
         
         this.logoutButton = new JButton("Logout");
         logoutButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                    throw new UnsupportedOperationException("Logout: Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                try {
+                    gUIConnectedToGUI.logout();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            });
+            }
+        });
         
+        leftPan.add(etiquette, BorderLayout.WEST);
+        leftPan.add(liste, BorderLayout.EAST);
         leftPan.add(chatWith, BorderLayout.SOUTH);
         leftPan.add(logoutButton, BorderLayout.SOUTH);
         
@@ -71,6 +102,8 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
     }
     
 
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Logout: Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -107,5 +140,15 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
 
         rightPan.addTab(null, content);
         rightPan.setTabComponentAt(rightPan.getTabCount() - 1, tab);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<User> userList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

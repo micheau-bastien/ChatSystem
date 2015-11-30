@@ -5,10 +5,14 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.io.IOException;
+
 /**
  *
  * @author laure
  */
 public interface GUIConnectedToGUI {
+
+    public void logout() throws IOException ;;
     
 }

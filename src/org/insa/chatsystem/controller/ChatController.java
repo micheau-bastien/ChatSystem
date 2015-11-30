@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import org.insa.chatsystem.ni.*;
 import org.insa.chatsystem.messages.*;
 import org.insa.chatsystem.users.*;
@@ -34,6 +35,10 @@ public class ChatController implements NItoController, GuiToController{
         this.chatNI.setNiToController(this);
     }
 
+    public ArrayList<User> getUserList(){
+        return this.connectedUserList.getUserList();
+    }
+    
     public void sendHello() throws IOException {
         this.chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
     }

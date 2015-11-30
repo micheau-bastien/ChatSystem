@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import org.insa.chatsystem.controller.*;
+import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 /**
  *
@@ -63,12 +65,17 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
     }
 
     @Override
-    public UserList userList() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<User> userList() {
+        return guiToController.getUserList();
     }
 
     @Override
     public void user() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void logout() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

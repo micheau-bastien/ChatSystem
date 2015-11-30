@@ -5,10 +5,13 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.util.ArrayList;
+import org.insa.chatsystem.users.User;
+
 /**
  *
  * @author laure
  */
 public interface GUIToGUIConnected {
-    
+    public ArrayList<User> userList();
 }

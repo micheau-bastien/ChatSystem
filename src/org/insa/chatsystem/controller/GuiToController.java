@@ -6,6 +6,9 @@
 package org.insa.chatsystem.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import org.insa.chatsystem.users.User;
+import org.insa.chatsystem.users.UserList;
 
 /**
  *
@@ -17,4 +20,6 @@ public interface GuiToController {
     
     //Throws exception ?
     public void logout();
+
+    public ArrayList<User> getUserList();
 }

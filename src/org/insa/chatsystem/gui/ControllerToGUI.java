@@ -5,6 +5,8 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.util.ArrayList;
+import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 
 /**
@@ -13,6 +15,6 @@ import org.insa.chatsystem.users.UserList;
  */
 public interface ControllerToGUI {
     public void printMessage(String Message, String nicknameExp);
-    public UserList userList();
+    public ArrayList<User> userList();
     public void user();
 }

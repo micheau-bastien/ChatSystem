@@ -37,6 +37,6 @@ public class User {
     
     @Override
     public String toString(){
-        return this.getNickname();
+        return (this.getNickname()+": "+this.getAddress());
     }
 }
