@@ -6,6 +6,7 @@
 package org.insa.chatsystem.gui;
 
 import java.io.IOException;
+import org.insa.chatsystem.users.UserList;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.io.IOException;
  */
 public interface GUIConnectedToGUI {
 
-    public void logout() throws IOException ;;
+    public void logout() throws IOException ;
+    public UserList fetchUserList();
     
 }
