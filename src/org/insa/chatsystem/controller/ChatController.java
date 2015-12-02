@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import org.insa.chatsystem.ni.*;
 import org.insa.chatsystem.messages.*;
 import org.insa.chatsystem.users.*;
@@ -37,10 +36,6 @@ public class ChatController implements NItoController, GuiToController{
 
     public UserList getUserList(){
         return this.connectedUserList;
-    }
-    
-    public void sendHello() throws IOException {
-        this.chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
     }
     
     @Override
@@ -78,8 +73,9 @@ public class ChatController implements NItoController, GuiToController{
     public void connect(String nickname) throws IOException {
         System.out.println(nickname);
         //AddUser
-        this.connectedUserList.addUser(new User(nickname, InetAddress.getLocalHost()));
-        //chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
+        this.localUser = new User(nickname, InetAddress.getLocalHost());
+        this.connectedUserList.addUser(this.localUser);
+        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
     }
 
     @Override
@@ -88,7 +84,9 @@ public class ChatController implements NItoController, GuiToController{
     }
 
     @Override
-    public void logout() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void logout() throws UnknownHostException, IOException {
+        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
+        this.connectedUserList = new UserList();
+        this.localUser = null;
     }
 }

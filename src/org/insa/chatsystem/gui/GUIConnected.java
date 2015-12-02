@@ -5,12 +5,10 @@
  */
 package org.insa.chatsystem.gui;
 
-import java.net.SocketException;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.SocketException;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -20,67 +18,76 @@ import org.insa.chatsystem.users.User;
  * 
  * @author Laure 
 */
-public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConnected, ListSelectionListener {
+public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelectionListener {
     
-    private GUIConnectedToGUI gUIConnectedToGUI;
-    private final JButton logoutButton;
-    private JButton chatWith = new JButton("Chat With");
-    //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
-    private JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-    //pan de droite avec les onglets
-    JTabbedPane rightPan = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-     
+    private final GUIConnectedToGUI gUIConnectedToGUI;
     private int tabCounter = 0;
     
+    private JButton logoutButton, chatWithButton, sendButton, closeButton;
+    private JPanel groupChatTab;
+    private JList<User> liste;
+    private User selectedUser;
     
-    ///////////////////////////TEST POUR LA USER LIST///////////////
-    private JList liste = new JList();
-    private JLabel etiquette = new JLabel("Connected User List");
-    private String choix[] = {" Pierre:192.256.5.6", " Paul:129.168.45.3", " Jacques", " Lou", " Marie"};
+    //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
+    private JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+    JTabbedPane rightPan;
+    JPanel leftPan;
     
-    
-    
-    public GUIConnected() {
-        // PB : taille de la fenêtre pas bonne, et le panel ne se resize pas comme il faut
+    public GUIConnected(final GUIConnectedToGUI gUIConnectedToGUI) {
+        this.gUIConnectedToGUI = gUIConnectedToGUI;
+        this.setLayout(new BorderLayout(2,2));
         
-        ///////////////////TEST LIST//////////////////////////
-        liste = new JList(choix);
-        liste.addListSelectionListener(this);
+        //Create Right Pane
+        this.rightPan = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        this.rightPan.addTab("Group Chat Room", this.groupChatTab);
         
+        //Fill Right Pane with initialized elements
+        this.initGroupeChatTab();
+        this.hPane.setRightComponent(rightPan);
        
-        ///////////////////TEST LIST//////////////////////////
-
+        //Create Left Pane
+        this.leftPan = new JPanel();
+        this.leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
         
+        //Fill Left Pane with initialized elements
+        this.initChatWithButton();
+        this.initLogoutButton();
+        this.initListe();
+        leftPan.add(new JLabel("Connected User List"), BorderLayout.WEST);
+        leftPan.add(liste, BorderLayout.EAST);
+        leftPan.add(this.chatWithButton, BorderLayout.SOUTH);
+        leftPan.add(this.logoutButton, BorderLayout.SOUTH);
         
-        
-        
-        chatWith.addActionListener(new ActionListener(){
+        this.hPane.setLeftComponent(leftPan);
+        this.add(hPane);
+    }
+    
+    private void initListe(){
+        this.liste = new JList(this.gUIConnectedToGUI.fetchUserList().getUserList().toArray());
+        this.liste.addListSelectionListener(this); 
+    }
+    
+    private void initGroupeChatTab() {
+        this.groupChatTab = new JPanel();
+        this.groupChatTab.setLayout(new BoxLayout(groupChatTab, BoxLayout.Y_AXIS));
+        this.groupChatTab.add(new JLabel("conversation de groupe"));
+        this.groupChatTab.add(new JTextField("msg"));
+        this.groupChatTab.add(new JButton("send msg"));
+    }
+    
+    private void initChatWithButton(){
+        this.chatWithButton = new JButton("Chat With");
+        this.chatWithButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 //Il faut rajouter la valeur du champ user sélectionné
                 newChatTab();
             }
         });
-        
-        
-
-        JPanel groupChatTab = new JPanel();
-        groupChatTab.setLayout(new BoxLayout(groupChatTab, BoxLayout.Y_AXIS));
-        groupChatTab.add(new JLabel("conversation de groupe"));
-        groupChatTab.add(new JTextField("msg"));
-        groupChatTab.add(new JButton("send msg"));
-        
-        rightPan.addTab("Group Chat Room", groupChatTab);
-        //rightPan.setComponentAt(0 , groupChatTab);
-
-        hPane.setRightComponent(rightPan);
-       
-        JPanel leftPan = new JPanel();
-        leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
-        //leftPan.add(new JLabel("User List: "));
-        //leftPan.add(new JLabel("-User1 \n-User2"));
-        
+    }
+    
+    private void initLogoutButton(){
         this.logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(new ActionListener(){
+        this.logoutButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
                     gUIConnectedToGUI.logout();
@@ -89,24 +96,6 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
                 }
             }
         });
-        
-        leftPan.add(etiquette, BorderLayout.WEST);
-        leftPan.add(liste, BorderLayout.EAST);
-        leftPan.add(chatWith, BorderLayout.SOUTH);
-        leftPan.add(logoutButton, BorderLayout.SOUTH);
-        
-        hPane.setLeftComponent(leftPan);
-        hPane.setSize(700, 700);
-        add(hPane);
-                
-    }
-    
-
-    
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Logout: Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
@@ -122,11 +111,10 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
         JButton boutonFermer = new JButton("Close Chat");
         boutonFermer.setSize(30, 30);
         boutonFermer.addActionListener(new ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-            int closeTabNumber = rightPan.indexOfComponent(content);
-            rightPan.removeTabAt(closeTabNumber);
-          }
+            public void actionPerformed(ActionEvent e) {
+                int closeTabNumber = rightPan.indexOfComponent(content);
+                rightPan.removeTabAt(closeTabNumber);
+            }
         });
 
         
@@ -144,7 +132,7 @@ public class GUIConnected extends JPanel implements ActionListener, GUIToGUIConn
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.selectedUser = this.liste.getSelectedValue();
     }
 
     @Override

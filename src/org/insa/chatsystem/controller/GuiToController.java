@@ -6,6 +6,7 @@
 package org.insa.chatsystem.controller;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
@@ -18,8 +19,6 @@ public interface GuiToController {
     public void connect(String nickname)  throws IOException ;
     public void sendMessage(String nickname);
     
-    //Throws exception ?
-    public void logout();
-
+    public void logout()  throws UnknownHostException, IOException;
     public UserList getUserList();
 }

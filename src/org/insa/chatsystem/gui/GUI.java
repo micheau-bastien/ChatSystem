@@ -5,13 +5,12 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.awt.BorderLayout;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import org.insa.chatsystem.controller.*;
-import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 /**
  *
@@ -23,7 +22,6 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
     
     public GUI() throws SocketException, UnknownHostException {
         this.guiToController = new ChatController();
-        //this.setSize(250, 400);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
@@ -58,9 +56,9 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
 
     @Override
     public void connect(String nickname)  throws IOException  {
-        //this.guiToController.connect(nickname);
+        this.guiToController.connect(nickname);
         System.out.println("On lance la GUI Connected ! ");
-        this.setContentPane(new GUIConnected());
+        this.setContentPane(new GUIConnected(this));
         this.draw();
     }
 
@@ -76,6 +74,8 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
 
     @Override
     public void logout() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.guiToController.logout();
+        this.setContentPane(new GUIConnection(this));
+        this.draw();        
     }
 }
