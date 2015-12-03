@@ -25,7 +25,7 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
     
     private JButton logoutButton, chatWithButton, sendButton, closeButton;
     private JPanel groupChatTab;
-    private JList<User> liste;
+    private JList<User> list;
     private User selectedUser;
     
     //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
@@ -39,10 +39,10 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
         
         //Create Right Pane
         this.rightPan = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        this.initGroupeChatTab();
         this.rightPan.addTab("Group Chat Room", this.groupChatTab);
         
         //Fill Right Pane with initialized elements
-        this.initGroupeChatTab();
         this.hPane.setRightComponent(rightPan);
        
         //Create Left Pane
@@ -52,9 +52,9 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
         //Fill Left Pane with initialized elements
         this.initChatWithButton();
         this.initLogoutButton();
-        this.initListe();
+        this.initList();
         leftPan.add(new JLabel("Connected User List"), BorderLayout.WEST);
-        leftPan.add(liste, BorderLayout.EAST);
+        leftPan.add(list, BorderLayout.EAST);
         leftPan.add(this.chatWithButton, BorderLayout.SOUTH);
         leftPan.add(this.logoutButton, BorderLayout.SOUTH);
         
@@ -62,9 +62,9 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
         this.add(hPane);
     }
     
-    private void initListe(){
-        this.liste = new JList(this.gUIConnectedToGUI.fetchUserList().getUserList().toArray());
-        this.liste.addListSelectionListener(this); 
+    private void initList(){
+        this.list = new JList(this.gUIConnectedToGUI.fetchUserList().getUserList().toArray());
+        this.list.addListSelectionListener(this); 
     }
     
     private void initGroupeChatTab() {
@@ -132,10 +132,9 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        this.selectedUser = this.liste.getSelectedValue();
+        this.selectedUser = this.list.getSelectedValue();
     }
 
-    @Override
     public ArrayList<User> userList() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
