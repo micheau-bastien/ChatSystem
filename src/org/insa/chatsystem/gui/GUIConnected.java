@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.insa.chatsystem.users.User;
-import org.insa.chatsystem.users.UserList;
 
 /**
  * 
@@ -29,25 +28,15 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
     private JList<User> liste;
     private User selectedUser;
     
-<<<<<<< Updated upstream
     //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
     private JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     JTabbedPane rightPan;
     JPanel leftPan;
-=======
-    ///////////////////////////TEST POUR LA USER LIST///////////////
-    private JList list = new JList();
-    private JLabel listLabel = new JLabel("Connected User List");
-    private String choix[] = {" Pierre:192.256.5.6", " Paul:129.168.45.3", " Jacques", " Lou", " Marie"};
-    
-    
->>>>>>> Stashed changes
     
     public GUIConnected(final GUIConnectedToGUI gUIConnectedToGUI) {
         this.gUIConnectedToGUI = gUIConnectedToGUI;
         this.setLayout(new BorderLayout(2,2));
         
-<<<<<<< Updated upstream
         //Create Right Pane
         this.rightPan = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
         this.rightPan.addTab("Group Chat Room", this.groupChatTab);
@@ -59,16 +48,6 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
         //Create Left Pane
         this.leftPan = new JPanel();
         this.leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
-=======
-        ///////////////////TEST LIST//////////////////////////
-        //list = new JList((ListModel) this.gUIConnectedToGUI.fetchUserList());
-        list = new JList(choix);
-        list.addListSelectionListener(this);
-        ///////////////////TEST LIST//////////////////////////
-
-        
-        
->>>>>>> Stashed changes
         
         //Fill Left Pane with initialized elements
         this.initChatWithButton();
@@ -117,27 +96,6 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
                 }
             }
         });
-<<<<<<< Updated upstream
-=======
-        
-        leftPan.add(listLabel, BorderLayout.WEST);
-        leftPan.add(list, BorderLayout.EAST);
-        leftPan.add(chatWith, BorderLayout.SOUTH);
-        leftPan.add(logoutButton, BorderLayout.SOUTH);
-        
-        hPane.setLeftComponent(leftPan);
-        hPane.setSize(700, 700);
-        add(hPane);
-                
-    }
-    
-
-    
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Logout: Not supported yet."); //To change body of generated methods, choose Tools | Templates.
->>>>>>> Stashed changes
     }
     
     
@@ -147,7 +105,7 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
         final JPanel content = new JPanel();
         JPanel tab = new JPanel();
         tab.setOpaque(false);
-        
+
         JLabel labelOnglet = new JLabel("Onglet " + (++tabCounter));
 
         JButton boutonFermer = new JButton("Close Chat");
@@ -175,5 +133,10 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
     @Override
     public void valueChanged(ListSelectionEvent e) {
         this.selectedUser = this.liste.getSelectedValue();
+    }
+
+    @Override
+    public ArrayList<User> userList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
