@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 import org.insa.chatsystem.ni.*;
 import org.insa.chatsystem.messages.*;
 import org.insa.chatsystem.users.*;
+import org.insa.chatsystem.gui.*;
 
 /**
  *
@@ -20,10 +21,12 @@ import org.insa.chatsystem.users.*;
 public class ChatController implements NItoController, GuiToController{
     private ChatNI chatNI;
     private ChatControllerToChatNI chatControllerToChatNI;
+    private ControllerToGUI controllerToGUI;
     private User localUser;
     private UserList connectedUserList;
     
-    public ChatController() throws SocketException, UnknownHostException {
+    public ChatController(GUI gui) throws SocketException, UnknownHostException {
+        this.controllerToGUI = gui;
         this.connectedUserList = new UserList();
         this.chatNI = new ChatNI();
         this.chatControllerToChatNI = this.chatNI;
@@ -54,7 +57,7 @@ public class ChatController implements NItoController, GuiToController{
                 this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
                 break;
             case Message.TYPE_MESSAGE : /*MESSAGE*/
-                // afficher le message à l'user
+                controllerToGUI.printMessage(((MessageMessage)message).getMessage(), (connectedUserList.searchUser(source)).getNickname());
                 break;
             case Message.TYPE_FILEREQ : /*FILEREQ*/
                 // A gérer 

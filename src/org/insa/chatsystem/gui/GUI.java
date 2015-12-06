@@ -18,14 +18,17 @@ import org.insa.chatsystem.users.UserList;
  */
 public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, GUIConnectedToGUI {
     private final GuiToController guiToController;
-    
+    private final GUIToGUIConnected guiToGUIConnected;
+    private final GUIConnected guiConnected;
     
     public GUI() throws SocketException, UnknownHostException {
-        this.guiToController = new ChatController();
+        this.guiToController = new ChatController(this);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setContentPane(new GUIConnection(this));
+        guiConnected = new GUIConnected(this);
+        guiToGUIConnected = guiConnected;
         this.draw();
     }
     
@@ -36,7 +39,7 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
 
     @Override
     public void printMessage(String Message, String nicknameExp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        guiToGUIConnected.printMessage(Message, nicknameExp);
     }
 
     /**
@@ -58,7 +61,7 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
     public void connect(String nickname)  throws IOException  {
         this.guiToController.connect(nickname);
         System.out.println("On lance la GUI Connected ! ");
-        this.setContentPane(new GUIConnected(this));
+        this.setContentPane(this.guiConnected);
         this.draw();
     }
 

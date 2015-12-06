@@ -138,4 +138,9 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
     public ArrayList<User> userList() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void printMessage(String Message, String nicknameExp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

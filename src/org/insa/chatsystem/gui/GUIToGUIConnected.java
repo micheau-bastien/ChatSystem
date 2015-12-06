@@ -14,5 +14,5 @@ import org.insa.chatsystem.users.UserList;
  * @author laure
  */
 public interface GUIToGUIConnected {
-
+    public void printMessage(String Message, String nicknameExp);
 }
