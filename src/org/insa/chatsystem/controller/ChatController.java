@@ -24,8 +24,10 @@ public class ChatController implements NItoController, GuiToController{
     private ControllerToGUI controllerToGUI;
     private User localUser;
     private UserList connectedUserList;
+    private MessageObserver messageObserver;
     
     public ChatController(GUI gui) throws SocketException, UnknownHostException {
+        messageObserver = gui.getGuiConnected();
         this.controllerToGUI = gui;
         this.connectedUserList = new UserList();
         this.chatNI = new ChatNI();
@@ -51,7 +53,7 @@ public class ChatController implements NItoController, GuiToController{
                     // Ajouter l'expéditeur à la liste des users
                     this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
                     if(((MessageHello)message).isReqReply()){
-                        System.out.println("HEELO RENVOYE");
+                        System.out.println("HELLO RENVOYE");
                         chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
                     }
                     break;
@@ -62,6 +64,7 @@ public class ChatController implements NItoController, GuiToController{
                     break;
                 case Message.TYPE_MESSAGE : /*MESSAGE*/
                     MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
+                    messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage());
                     break;
                 case Message.TYPE_FILEREQ : /*FILEREQ*/
                     // A gérer 

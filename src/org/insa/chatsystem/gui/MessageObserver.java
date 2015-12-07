@@ -5,16 +5,12 @@
  */
 package org.insa.chatsystem.gui;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import org.insa.chatsystem.users.User;
-import org.insa.chatsystem.users.UserList;
 
 /**
  *
- * @author laure
+ * @author Bastien
  */
-public interface GUIToGUIConnected {
-    //public void newMessage(InetAddress source)  throws UnknownHostException;
+public interface MessageObserver {
+    public void newMessage(User user, String message);
 }

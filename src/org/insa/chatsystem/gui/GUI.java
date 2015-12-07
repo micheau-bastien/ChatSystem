@@ -78,18 +78,13 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
     public void connect(String nickname)  throws IOException  {
         this.guiToController.connect(nickname);
         System.out.println("On lance la GUI Connected ! ");
-        this.setContentPane(this.guiConnected);
+        this.setContentPane(this.getGuiConnected());
         this.draw();
     }
 
     @Override
     public UserList fetchUserList() {
         return guiToController.getUserList();
-    }
-
-    @Override
-    public void user() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -104,9 +99,11 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
         guiToController.sendMessage(text, destination);
     }
 
-    @Override
-    public void newMessage(User u) throws UnknownHostException {
-        guiToGUIConnected.newMessage(u);
+    /**
+     * @return the guiConnected
+     */
+    public GUIConnectedBis getGuiConnected() {
+        return guiConnected;
     }
 
 

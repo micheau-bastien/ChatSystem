@@ -23,7 +23,7 @@ import org.insa.chatsystem.users.User;
  * 
  * @author Laure 
 */
-public class GUIConnectedBis extends JPanel implements ActionListener, GUIToGUIConnected, ListSelectionListener {
+public class GUIConnectedBis extends JPanel implements MessageObserver, ActionListener, GUIToGUIConnected, ListSelectionListener {
     
     private GUIConnectedToGUI gUIConnectedToGUI;
     private int tabCounter = 0;
@@ -83,7 +83,7 @@ public class GUIConnectedBis extends JPanel implements ActionListener, GUIToGUIC
     
     private void refreshMessagesWith(User user) throws UnknownHostException {
         MessageList messageExchanged = MessageList.with(user.getAddress());
-        this.messagesList.removeAll();
+        this.messagesList.setText("");
         for(MessageTextExchanged mte : messageExchanged){
             this.messagesList.setText(this.messagesList.getText() + "\n" + user.getNickname() + ": " + mte.getMessage());
         }
@@ -91,7 +91,7 @@ public class GUIConnectedBis extends JPanel implements ActionListener, GUIToGUIC
     
     private void printMessagesWith(User user) throws UnknownHostException {
         MessageList messageExchanged = MessageList.with(user.getAddress());
-        this.messagesList.removeAll();
+        this.messagesList.setText("");
         for(MessageTextExchanged mte : messageExchanged){
             if (mte.getSource().equals(InetAddress.getLocalHost())){
                 this.messagesList.setText(this.messagesList.getText()+"\n"+user.getNickname()+": "+mte.getMessage().getMessage());
@@ -144,11 +144,12 @@ public class GUIConnectedBis extends JPanel implements ActionListener, GUIToGUIC
     }
 
     @Override
-    public void newMessage(User user) throws UnknownHostException{
-        if (this.selectedUser.equals(user)){
-            this.refreshMessagesWith(user);
+    public void newMessage(User user, String message) {
+        if (this.selectedUser.getAddress().equals(user.getAddress())){
+            this.messagesList.setText(this.messagesList.getText() + "\n" + message);
+//this.refreshMessagesWith(user);
         }else{
-            
-        }
+            System.out.println("MESSAGE RECU SUR UNE AUTRE CONV");
+        }    
     }
 }
