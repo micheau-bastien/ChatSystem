@@ -22,6 +22,15 @@ public class UserList extends DefaultListModel<User>{
         this.addUser(new User("You", InetAddress.getLocalHost()));
     }
     
+    public boolean isAlreadyConnected(InetAddress address){
+        for(int n =0; n<this.size(); n++){
+            if(this.get(n).getAddress().equals(address)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void addUser(User user){
         this.addElement(user);
     }
@@ -41,7 +50,7 @@ public class UserList extends DefaultListModel<User>{
     
     public User searchUser(InetAddress address){
         for(int n =0; n<this.size(); n++){
-            if(this.get(n).getAddress() == address){
+            if(this.get(n).getAddress().equals(address)){
                 return this.get(n);
             }
         }

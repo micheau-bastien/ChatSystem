@@ -27,6 +27,7 @@ public class ChatController implements NItoController, GuiToController{
     private MessageObserver messageObserver;
     
     public ChatController(GUI gui) throws SocketException, UnknownHostException {
+        System.out.println("GUI COnnected : "+gui.getGuiConnected());
         messageObserver = gui.getGuiConnected();
         this.controllerToGUI = gui;
         this.connectedUserList = new UserList();
@@ -45,17 +46,21 @@ public class ChatController implements NItoController, GuiToController{
     
     @Override
     public void rcvMessage(InetAddress source, Message message) throws IOException {
-        System.out.println(message.getType());
+        System.out.println("Recu message de type : " + message.getType());
         if(!source.equals(InetAddress.getLocalHost())){
             switch (message.getType()){
                 case Message.TYPE_HELLO : /*HELLO*/
                     System.out.println("HELLO RECU");
-                    // Ajouter l'expéditeur à la liste des users
-                    this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
-                    if(((MessageHello)message).isReqReply()){
-                        System.out.println("HELLO RENVOYE");
-                        System.out.println(chatControllerToChatNI);
-                        chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
+                    if(!this.connectedUserList.isAlreadyConnected(source)){
+                        // Ajouter l'expéditeur à la liste des users
+                        this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
+                        if(((MessageHello)message).isReqReply()){
+                            System.out.println("HELLO RENVOYE");
+                            chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
+                        }
+                    }else{
+                        // @TODO : LAure
+                        System.out.println("DEJA CONNECTE");
                     }
                     break;
                 case Message.TYPE_BYE : /*BYE*/
@@ -64,6 +69,7 @@ public class ChatController implements NItoController, GuiToController{
                     this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
                     break;
                 case Message.TYPE_MESSAGE : /*MESSAGE*/
+                    System.out.println("MESSAGE OBSERVER" + messageObserver);
                     MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
                     messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage());
                     break;
