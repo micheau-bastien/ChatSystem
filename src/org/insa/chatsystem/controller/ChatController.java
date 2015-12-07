@@ -54,6 +54,7 @@ public class ChatController implements NItoController, GuiToController{
                     this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
                     if(((MessageHello)message).isReqReply()){
                         System.out.println("HELLO RENVOYE");
+                        System.out.println(chatControllerToChatNI);
                         chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
                     }
                     break;
