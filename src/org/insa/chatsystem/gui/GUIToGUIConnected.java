@@ -16,5 +16,5 @@ import org.insa.chatsystem.users.UserList;
  * @author laure
  */
 public interface GUIToGUIConnected {
-    //public void newMessage(InetAddress source)  throws UnknownHostException;
+    public void newMessage(User user, String message)  throws UnknownHostException;
 }

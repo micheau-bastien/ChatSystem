@@ -21,13 +21,14 @@ import org.insa.chatsystem.users.UserList;
  *
  * @author Bastien
  */
-public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, GUIConnectedToGUI {
+public class GUI extends JFrame implements MessageObserver, ControllerToGUI, GUIConnectionToGUI, GUIConnectedToGUI {
     private static GuiToController guiToController;
     private static GUIToGUIConnected guiToGUIConnected;
     private final GUIConnectedBis guiConnected;
     
     public GUI() throws SocketException, UnknownHostException {
         GUI.guiToController = new ChatController(this);
+        guiConnected = new GUIConnectedBis(this);
         this.setLocationRelativeTo(null);
         this.setTitle("ChatSystem MICHEAU BRICARD");
         this.setSize(500, 700);
@@ -40,7 +41,6 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
         });
         this.setResizable(true);
         this.setContentPane(new GUIConnection(this));
-        guiConnected = new GUIConnectedBis(this);
         GUI.guiToGUIConnected = guiConnected;
         this.draw();
     }
@@ -107,5 +107,9 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
         return guiConnected;
     }
 
+    @Override
+    public void newMessage(User user, String message) throws UnknownHostException {
+        guiToGUIConnected.newMessage(user, message);
+    }
 
 }

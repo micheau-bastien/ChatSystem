@@ -23,7 +23,7 @@ import org.insa.chatsystem.users.User;
  * 
  * @author Laure 
 */
-public class GUIConnectedBis extends JPanel implements MessageObserver, ActionListener, GUIToGUIConnected, ListSelectionListener {
+public class GUIConnectedBis extends JPanel implements ActionListener, GUIToGUIConnected, ListSelectionListener {
     
     private GUIConnectedToGUI gUIConnectedToGUI;
     private int tabCounter = 0;
