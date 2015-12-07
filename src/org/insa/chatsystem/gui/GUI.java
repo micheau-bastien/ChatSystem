@@ -33,7 +33,7 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
         this.setSize(500, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
-            public void WindowClosing(WindowEvent e) {
+            public void WindowClosed(WindowEvent e) {
                 System.out.println("test");
                 GUI.shutDown();
             }

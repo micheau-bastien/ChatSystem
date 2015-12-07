@@ -42,7 +42,6 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
         MessageList list = new MessageList();
         System.out.println("recherche des messages vers "+dest.toString());
         for(MessageTextExchanged mte : messageDB){
-            System.out.println("On a trouvé : "+mte+ " from : "+mte.getSource().toString() + " vers : " + mte.getDest());
             if (mte.getDest().equals(dest)){
                 list.add(mte);
             } else if (mte.getSource().equals(InetAddress.getLocalHost())){

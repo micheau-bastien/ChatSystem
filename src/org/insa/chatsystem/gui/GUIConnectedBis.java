@@ -94,11 +94,11 @@ public class GUIConnectedBis extends JPanel implements MessageObserver, ActionLi
         this.messagesList.setText("");
         for(MessageTextExchanged mte : messageExchanged){
             if (mte.getSource().equals(InetAddress.getLocalHost())){
+                this.messagesList.setText(this.messagesList.getText()+"\n"+"you: "+": "+mte.getMessage().getMessage());
+            }else{
                 this.messagesList.setText(this.messagesList.getText()+"\n"+user.getNickname()+": "+mte.getMessage().getMessage());
             }
         }
-        System.out.println("on repeint");
-        this.repaint();
     }
     
     private void initLogoutButton(){
