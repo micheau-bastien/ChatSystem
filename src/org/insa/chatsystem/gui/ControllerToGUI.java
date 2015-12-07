@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
@@ -14,6 +15,6 @@ import org.insa.chatsystem.users.UserList;
  * @author Bastien
  */
 public interface ControllerToGUI {
-    public void printMessage(String Message, String nicknameExp);
+    public void newMessage(User u) throws UnknownHostException ;
     public void user();
 }

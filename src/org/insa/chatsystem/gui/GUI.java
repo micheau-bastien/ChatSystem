@@ -6,41 +6,58 @@
 package org.insa.chatsystem.gui;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import org.insa.chatsystem.controller.*;
+import org.insa.chatsystem.messages.MessageList;
+import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 /**
  *
  * @author Bastien
  */
 public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, GUIConnectedToGUI {
-    private final GuiToController guiToController;
-    private final GUIToGUIConnected guiToGUIConnected;
-    private final GUIConnected guiConnected;
+    private static GuiToController guiToController;
+    private static GUIToGUIConnected guiToGUIConnected;
+    private final GUIConnectedBis guiConnected;
     
     public GUI() throws SocketException, UnknownHostException {
-        this.guiToController = new ChatController(this);
+        GUI.guiToController = new ChatController(this);
         this.setLocationRelativeTo(null);
+        this.setTitle("ChatSystem MICHEAU BRICARD");
+        this.setSize(500, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            public void WindowClosing(WindowEvent e) {
+                System.out.println("test");
+                GUI.shutDown();
+            }
+        });
         this.setResizable(true);
         this.setContentPane(new GUIConnection(this));
-        guiConnected = new GUIConnected(this);
-        guiToGUIConnected = guiConnected;
+        guiConnected = new GUIConnectedBis(this);
+        GUI.guiToGUIConnected = guiConnected;
         this.draw();
+    }
+    
+    private static void shutDown(){
+        try {
+            GUI.guiToController.logout();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
     
     public void draw(){
         this.pack();
         this.setVisible(true);
     }    
-
-    @Override
-    public void printMessage(String Message, String nicknameExp) {
-        guiToGUIConnected.printMessage(Message, nicknameExp);
-    }
 
     /**
      * @param panel the panel to set
@@ -81,4 +98,16 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
         this.setContentPane(new GUIConnection(this));
         this.draw();        
     }
+
+    @Override
+    public void send(String text, InetAddress destination) throws IOException {
+        guiToController.sendMessage(text, destination);
+    }
+
+    @Override
+    public void newMessage(User u) throws UnknownHostException {
+        guiToGUIConnected.newMessage(u);
+    }
+
+
 }

@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class MessageBye extends Message {
     
     public MessageBye(){
-        this.type = Message.TYPE_HELLO;
+        this.type = Message.TYPE_BYE;
     }
     
     @Override

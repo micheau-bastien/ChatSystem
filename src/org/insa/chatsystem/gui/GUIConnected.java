@@ -9,6 +9,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -63,7 +64,7 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
     }
     
     private void initList(){
-        this.list = new JList(this.gUIConnectedToGUI.fetchUserList().getUserList().toArray());
+        this.list = new JList(this.gUIConnectedToGUI.fetchUserList().toArray());
         this.list.addListSelectionListener(this); 
     }
     
@@ -140,7 +141,8 @@ public class GUIConnected extends JPanel implements GUIToGUIConnected, ListSelec
     }
 
     @Override
-    public void printMessage(String Message, String nicknameExp) {
+    public void newMessage(User user) throws UnknownHostException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

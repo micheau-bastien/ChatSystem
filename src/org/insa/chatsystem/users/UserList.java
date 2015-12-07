@@ -8,58 +8,44 @@ package org.insa.chatsystem.users;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
  * @author Bastien
  */
-public class UserList{
-    private ArrayList<User> userList;
+public class UserList extends DefaultListModel<User>{
     
     public UserList() throws UnknownHostException {
-        this.userList = new ArrayList<User>();
-        this.userList.add(new User("All", InetAddress.getByName("255.255.255.255")));
+        super();
+        this.addUser(new User("All", InetAddress.getByName("255.255.255.255")));
+        this.addUser(new User("You", InetAddress.getLocalHost()));
     }
     
     public void addUser(User user){
-        this.getUserList().add(user);
+        this.addElement(user);
     }
     
     public void removeUser(User user){
-        this.getUserList().remove(user);
+        this.removeElement(user);
     }
     
     public User searchUser(String nickname){
-        int n=0;
-        while(this.getUserList().get(n).getNickname() != nickname && n <= this.getUserList().size()){
-            n++;
+        for(int n =0; n<this.size(); n++){
+            if(this.get(n).getNickname() == nickname){
+                return this.get(n);
+            }
         }
-        if (n > this.getUserList().size()){
-            // @TODO : NullPointerException
-            return null;
-        }else{
-            return this.getUserList().get(n);
-        }
+        return null;
     }
     
     public User searchUser(InetAddress address){
-        int n=0;
-        while(this.getUserList().get(n).getAddress()!= address && n <= this.getUserList().size()){
-            n++;
+        for(int n =0; n<this.size(); n++){
+            if(this.get(n).getAddress() == address){
+                return this.get(n);
+            }
         }
-        if (n > this.getUserList().size()){
-            // @TODO : NullPointerException
-            return null;
-        }else{
-            return this.getUserList().get(n);
-        }
-    }
-
-    /**
-     * @return the userList
-     */
-    public ArrayList<User> getUserList() {
-        return userList;
+        return null;
     }
     
 }

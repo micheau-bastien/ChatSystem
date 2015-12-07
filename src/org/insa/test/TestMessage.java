@@ -19,7 +19,7 @@ import org.insa.chatsystem.ni.*;
 public class TestMessage {
     public static void main(String[] args) {
         try {
-            ChatController chat = new ChatController();
+            //ChatController chat = new ChatController();
             
             /*ChatNI chatNI = new ChatNI();
             UDPReceiver receiver = chatNI.getUdpReceiver();

@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.messages;
 
+import java.util.ArrayList;
 import org.json.JSONObject;
 
 /**
@@ -12,7 +13,6 @@ import org.json.JSONObject;
  * @author Bastien
  */
 public class MessageMessage extends Message {
-    
     private String message;
     
     public MessageMessage (String message){

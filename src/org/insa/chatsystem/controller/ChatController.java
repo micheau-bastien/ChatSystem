@@ -43,32 +43,39 @@ public class ChatController implements NItoController, GuiToController{
     
     @Override
     public void rcvMessage(InetAddress source, Message message) throws IOException {
-        
-        switch (message.getType()){
-            case Message.TYPE_HELLO : /*HELLO*/
-                // Ajouter l'expéditeur à la liste des users
-                this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
-                if(((MessageHello)message).isReqReply()){
-                    chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
-                }
-                break;
-            case Message.TYPE_BYE : /*BYE*/
-                // sortir le gars de la liste des users
-                this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
-                break;
-            case Message.TYPE_MESSAGE : /*MESSAGE*/
-                controllerToGUI.printMessage(((MessageMessage)message).getMessage(), (connectedUserList.searchUser(source)).getNickname());
-                break;
-            case Message.TYPE_FILEREQ : /*FILEREQ*/
-                // A gérer 
-                break;
-            case Message.TYPE_FILEREQRESP : /*REQRESP*/
-                // Envoyer fichier 
-                break;
-            default : 
-                // @TODO : mettre une erreur type message
-                message = null;
-                break;
+        System.out.println(message.getType());
+        if(!source.equals(InetAddress.getLocalHost())){
+            switch (message.getType()){
+                case Message.TYPE_HELLO : /*HELLO*/
+                    System.out.println("HELLO RECU");
+                    // Ajouter l'expéditeur à la liste des users
+                    this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
+                    if(((MessageHello)message).isReqReply()){
+                        System.out.println("HEELO RENVOYE");
+                        chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
+                    }
+                    break;
+                case Message.TYPE_BYE : /*BYE*/
+                    // sortir le gars de la liste des users
+                    System.out.println("BYEFROM : "+source.getAddress());
+                    this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
+                    break;
+                case Message.TYPE_MESSAGE : /*MESSAGE*/
+                    MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
+                    break;
+                case Message.TYPE_FILEREQ : /*FILEREQ*/
+                    // A gérer 
+                    break;
+                case Message.TYPE_FILEREQRESP : /*REQRESP*/
+                    // Envoyer fichier 
+                    break;
+                default : 
+                    // @TODO : mettre une erreur type message
+                    message = null;
+                    break;
+            }
+        }else{
+            System.out.println("selfMessage : " +message);
         }
     }
 
@@ -80,16 +87,19 @@ public class ChatController implements NItoController, GuiToController{
         this.connectedUserList.addUser(this.localUser);
         chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
     }
-
-    @Override
-    public void sendMessage(String nickname) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public void logout() throws UnknownHostException, IOException {
+        System.out.println("logout");
         chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
         this.connectedUserList = new UserList();
         this.localUser = null;
+    }
+
+    @Override
+    public void sendMessage(String message, InetAddress dest) throws IOException {
+        System.out.println("SENDING MESSAGE TO  : "+dest);
+        MessageList.addToMessageDB(new MessageMessage(message), InetAddress.getLocalHost(), dest);
+        chatControllerToChatNI.sendMessage(dest, new MessageMessage(message));
     }
 }
