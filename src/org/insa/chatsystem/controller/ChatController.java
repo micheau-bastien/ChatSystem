@@ -27,6 +27,7 @@ public class ChatController implements NItoController, GuiToController{
     private MessageObserver messageObserver;
     
     public ChatController(GUI gui) throws SocketException, UnknownHostException {
+        System.out.println("GUI COnnected : "+gui.getGuiConnected());
         messageObserver = gui.getGuiConnected();
         this.controllerToGUI = gui;
         this.connectedUserList = new UserList();
@@ -68,7 +69,7 @@ public class ChatController implements NItoController, GuiToController{
                     this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
                     break;
                 case Message.TYPE_MESSAGE : /*MESSAGE*/
-                    System.out.println(messageObserver);
+                    System.out.println("MESSAGE OBSERVER" + messageObserver);
                     MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
                     messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage());
                     break;

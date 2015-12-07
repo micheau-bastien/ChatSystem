@@ -103,6 +103,7 @@ public class GUI extends JFrame implements ControllerToGUI, GUIConnectionToGUI, 
      * @return the guiConnected
      */
     public GUIConnectedBis getGuiConnected() {
+                System.out.println("Gui Connected from GUI : "+ guiConnected);
         return guiConnected;
     }
 
