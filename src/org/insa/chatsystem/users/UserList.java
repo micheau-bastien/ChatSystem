@@ -19,7 +19,7 @@ public class UserList extends DefaultListModel<User>{
     public UserList() throws UnknownHostException {
         super();
         this.addUser(new User("All", InetAddress.getByName("255.255.255.255")));
-        this.addUser(new User("You", InetAddress.getLocalHost()));
+        //this.addUser(new User("You", InetAddress.getLocalHost()));
     }
     
     public boolean isAlreadyConnected(InetAddress address){

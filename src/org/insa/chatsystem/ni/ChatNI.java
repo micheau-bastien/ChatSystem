@@ -54,20 +54,20 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
 
     @Override
     public void rcvdMessage(InetAddress source, Message message) throws IOException {
-        this.niToController.rcvMessage(source, message);
+        synchronized(this.niToController){
+            this.niToController.rcvMessage(source, message);
+        }
     }
 
     @Override
     public void sendMessage(InetAddress destination, Message message) throws IOException{
         this.udpSender.sendMessage(destination, message);
     }
-
-    /**
+    
+     /**
      * @param niToController the niToController to set
      */
     public void setNiToController(NItoController niToController) {
         this.niToController = niToController;
     }
-
- 
 }

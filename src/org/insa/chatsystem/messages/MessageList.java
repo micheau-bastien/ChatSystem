@@ -20,7 +20,7 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
     }
     
     public static void addToMessageDB(MessageMessage message, InetAddress source, InetAddress destination){
-        System.out.println("Added to DB : " +message);
+        System.out.println("Added to DB : " +message.toJSON());
         messageDB.add(new MessageTextExchanged(message, source, source, new Date()));
     }
     
@@ -40,11 +40,13 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
     
     public static MessageList with(InetAddress dest) throws UnknownHostException{
         MessageList list = new MessageList();
-        System.out.println("recherche des messages vers "+dest.toString());
+        System.out.println("recherche des messages vers "+dest);
         for(MessageTextExchanged mte : messageDB){
-            if (mte.getDest().equals(dest)){
+            if (mte.getSource().equals(dest) || (dest.equals(InetAddress.getByName("255.255.255.255")))){
                 list.add(mte);
-            } else if (mte.getSource().equals(InetAddress.getLocalHost())){
+                System.out.println("Received By You : " + mte.getMessage().toJSON());
+            } else if (mte.getSource().equals(InetAddress.getLocalHost()) && mte.getDest().equals(dest)){
+                System.out.println("Sent By You : " + mte.getMessage().toJSON() + "to : " + mte.getDest());
                 list.add(mte);
             }
         }

@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package org.insa.chatsystem.gui;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Insets;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -23,9 +26,14 @@ public class GUIConnection extends JPanel implements ActionListener{
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(new JLabel("User Name"));
         this.nicknameTextField = new JTextField("nickname");
+        this.nicknameTextField.setMaximumSize(new Dimension(200, 30));
+        this.nicknameTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.nicknameTextField.setAlignmentY(Component.CENTER_ALIGNMENT);
         this.add(nicknameTextField);
 
         this.connectButton = new JButton("Connect");
+        this.connectButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.connectButton.setAlignmentY(Component.CENTER_ALIGNMENT);
         connectButton.addActionListener(this);
         this.add(connectButton);
     }
