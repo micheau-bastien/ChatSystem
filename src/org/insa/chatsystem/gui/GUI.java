@@ -23,15 +23,19 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
     private static GuiToController guiToController;
     private static GuiToGuiConnected guiToGUIConnected;
     private final GUIConnected guiConnected;
+    private final GUIConnection guiConnection;
     
     public GUI() throws SocketException, UnknownHostException {
         GUI.guiToController = new ChatController(this);
-        guiConnected = new GUIConnected(this);
+        this.guiConnected = new GUIConnected(this);
+        GUI.guiToGUIConnected = guiConnected;
+        this.guiConnection = new GUIConnection(this);
         this.setLocationRelativeTo(null);
         this.setTitle("ChatSystem MICHEAU BRICARD");
         this.setMinimumSize(new Dimension(600, 400));
+        this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
                 try {
                     GUI.guiToController.logout();
@@ -42,9 +46,7 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
                           
             }
         }));
-        this.setResizable(true);
-        this.setContentPane(new GUIConnection(this));
-        GUI.guiToGUIConnected = guiConnected;
+        this.setContentPane(this.guiConnection);
         this.draw();
     }
     
@@ -61,6 +63,7 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
         this.pack();
         this.setVisible(true);
     }    
+    
     public void WindowClosed(WindowEvent e) {
         try {
             System.out.println("ON S'ETTEINT");
@@ -102,8 +105,8 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
     @Override
     public void logout() throws IOException {
         this.guiToController.logout();
-        this.setContentPane(new GUIConnection(this));
-        this.draw();        
+        this.setContentPane(this.guiConnection);
+        this.draw();
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import org.insa.chatsystem.controller.ChatController;
 import org.insa.chatsystem.controller.NItoController;
 import org.insa.chatsystem.messages.Message;
 
@@ -29,12 +30,13 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
     private NItoController niToController;
     
     // @TODO : faire une méthode démarre qui fait les fonction dans lesquelles on passe this en arg
-    public ChatNI() throws SocketException{
+    public ChatNI(ChatController chatController) throws SocketException{
+        this.niToController = chatController;
         socket = new DatagramSocket(ChatNI.PORT);
         this.udpSender = new UDPSender(this.socket);
         this.udpReceiver = UDPReceiver.sharedInstance(this.socket); // CECI EST UN NEW 
         this.udpReceiver.setUdpReceiverToChatNI(this);
-        this.tcpServer = new TCPServer();
+        //this.tcpServer = new TCPServer();
     }
 
     /**
@@ -62,17 +64,9 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
     public void sendMessage(InetAddress destination, Message message) throws IOException{
         this.udpSender.sendMessage(destination, message);
     }
-    
-     /**
-     * @param niToController the niToController to set
-     */
-    public void setNiToController(NItoController niToController) {
-        this.niToController = niToController;
-    }
 
     @Override
     public void startListening() {
-        System.out.println("StateListening : "+this.isListening);
         if(!isListening){
             this.isListening = true;
             this.udpReceiver.start();

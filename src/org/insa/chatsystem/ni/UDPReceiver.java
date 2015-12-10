@@ -36,16 +36,17 @@ public class UDPReceiver extends Thread {
 
     @Override
     public void run(){
-        try {
-            while (true) {
+        while (true) {
+            try {
                 socket.receive(this.packet);
                 String data = new String(packet.getData(), 0, packet.getLength());
                 JSONObject dataJSON = new JSONObject(data);
                 System.out.println("Reçu : "+dataJSON);
                 this.udpReceiverToChatNI.rcvdMessage(packet.getAddress(), Message.fromJSON(dataJSON));
-            } 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+                break;
+            }
         }
     }
 
