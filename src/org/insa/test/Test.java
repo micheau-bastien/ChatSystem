@@ -14,16 +14,14 @@ import org.insa.chatsystem.ni.ChatNI;
  *
  * @author Bastien
  */
+
 public class Test {
+    int a = 0;
+    public Test(){
+        int a =2;
+    }
     public static void main(String[] args) {
-        /*ChatNI chatNI = new ChatNI();
-        chatNI.getUdpReceiver().start();
-        chatNI.getUdpSender().sendHello();
-        chatNI.getUdpSender().sendMessage("localhost", "C'est mon message");
-        chatNI.getUdpSender().sendBye();*/
-        Calendar cal = Calendar.getInstance(); // Donne le calendrier à la date d'aujourd'hui
-        Date d = cal.getTime();
-        // 
-        System.out.println(d);
+        Test a = new Test();
+        System.out.println(a.a);
     }
 }

@@ -33,19 +33,6 @@ public class UDPReceiver extends Thread {
         UDPReceiver.socket = socket;
         return UDPReceiver.INSTANCE;
     }    
-    
-    // todo : Bouger dans ChatController
-    private void rcvHello(DatagramPacket packet){
-        String data = new String(packet.getData(), 0, packet.getLength());
-        JSONObject dataJSON = new JSONObject(data);
-        if(dataJSON.getBoolean("reqReply") == true){
-            UDPSender sender = new UDPSender(this.socket);
-            InetAddress adrs = packet.getAddress();
-            //sender.sendHelloBack(adrs);
-        }else{
-            // @TODO : Ajouter le mec à la liste des users
-        }
-    }
 
     @Override
     public void run(){
@@ -53,8 +40,8 @@ public class UDPReceiver extends Thread {
             while (true) {
                 socket.receive(this.packet);
                 String data = new String(packet.getData(), 0, packet.getLength());
-                System.out.println(data);
                 JSONObject dataJSON = new JSONObject(data);
+                System.out.println("Reçu : "+dataJSON);
                 this.udpReceiverToChatNI.rcvdMessage(packet.getAddress(), Message.fromJSON(dataJSON));
             } 
         } catch (Exception e) {

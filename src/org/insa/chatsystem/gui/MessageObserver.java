@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.net.UnknownHostException;
 import org.insa.chatsystem.users.User;
 
 /**
@@ -12,5 +13,5 @@ import org.insa.chatsystem.users.User;
  * @author Bastien
  */
 public interface MessageObserver {
-    public void newMessage(User user, String message);
+    public void newMessage(User user, String message) throws UnknownHostException;
 }

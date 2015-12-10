@@ -37,6 +37,7 @@ public class UDPSender {
 
     // TODO : Faire fonction String2INET
     public void sendMessage(InetAddress address, Message message) throws IOException{
+            System.out.println("Send Message" + message.toJSON());
             buf = message.toJSON().toString().getBytes(Charset.forName("UTF-8"));
             packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
             socket.send(packet);
@@ -57,7 +58,6 @@ public class UDPSender {
             }
             this.sendJSON(InetAddress.getByName(address), json);
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
         }
     }

@@ -21,15 +21,12 @@ import org.insa.chatsystem.gui.*;
 public class ChatController implements NItoController, GuiToController{
     private ChatNI chatNI;
     private ChatControllerToChatNI chatControllerToChatNI;
-    private ControllerToGUI controllerToGUI;
     private User localUser;
     private UserList connectedUserList;
     private MessageObserver messageObserver;
     
     public ChatController(GUI gui) throws SocketException, UnknownHostException {
-        System.out.println("GUI COnnected : "+gui.getGuiConnected());
-        messageObserver = gui.getGuiConnected();
-        this.controllerToGUI = gui;
+        this.messageObserver = gui;
         this.connectedUserList = new UserList();
         this.chatNI = new ChatNI();
         this.chatControllerToChatNI = this.chatNI;
@@ -56,7 +53,9 @@ public class ChatController implements NItoController, GuiToController{
                         this.connectedUserList.addUser(new User(((MessageHello)message).getNickname(), source));
                         if(((MessageHello)message).isReqReply()){
                             System.out.println("HELLO RENVOYE");
-                            chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
+                            synchronized(this.chatControllerToChatNI){
+                                chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
+                            }
                         }
                     }else{
                         // @TODO : LAure
@@ -69,7 +68,8 @@ public class ChatController implements NItoController, GuiToController{
                     this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
                     break;
                 case Message.TYPE_MESSAGE : /*MESSAGE*/
-                    System.out.println("MESSAGE OBSERVER" + messageObserver);
+                    if(messageObserver == null){
+                    }
                     MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
                     messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage());
                     break;
@@ -91,17 +91,20 @@ public class ChatController implements NItoController, GuiToController{
 
     @Override
     public void connect(String nickname) throws IOException {
-        System.out.println(nickname);
         //AddUser
         this.localUser = new User(nickname, InetAddress.getLocalHost());
         this.connectedUserList.addUser(this.localUser);
-        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
+        synchronized(this.chatControllerToChatNI){
+            chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
+        }
     }
     
     @Override
     public void logout() throws UnknownHostException, IOException {
         System.out.println("logout");
-        chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
+        synchronized(this.chatControllerToChatNI){
+            chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
+        }
         this.connectedUserList = new UserList();
         this.localUser = null;
     }
@@ -110,6 +113,8 @@ public class ChatController implements NItoController, GuiToController{
     public void sendMessage(String message, InetAddress dest) throws IOException {
         System.out.println("SENDING MESSAGE TO  : "+dest);
         MessageList.addToMessageDB(new MessageMessage(message), InetAddress.getLocalHost(), dest);
-        chatControllerToChatNI.sendMessage(dest, new MessageMessage(message));
+        synchronized(this.chatControllerToChatNI){
+            chatControllerToChatNI.sendMessage(dest, new MessageMessage(message));
+        }
     }
 }
