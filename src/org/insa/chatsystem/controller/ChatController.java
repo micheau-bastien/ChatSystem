@@ -42,7 +42,7 @@ public class ChatController implements NItoController, GuiToController{
     }
     
     @Override
-    public void rcvMessage(InetAddress source, Message message) throws IOException {
+    public synchronized void rcvMessage(InetAddress source, Message message) throws IOException {
         if(!source.equals(InetAddress.getLocalHost())){
             switch (message.getType()){
                 case Message.TYPE_HELLO : /*HELLO*/
@@ -65,12 +65,16 @@ public class ChatController implements NItoController, GuiToController{
                 case Message.TYPE_BYE : /*BYE*/
                     // sortir le gars de la liste des users
                     System.out.println("BYEFROM : "+source.getAddress());
-                    this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
+                    synchronized(this.connectedUserList){
+                        this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
+                    }
                     break;
                 case Message.TYPE_MESSAGE : /*MESSAGE*/
                     MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
-                    this.connectedUserList.searchUser(source).addNewUnreadMessage();
-                    messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage()); 
+                    //this.connectedUserList.searchUser(source).addNewUnreadMessage();
+                    if (this.connectedUserList.searchUser(source) != null){
+                        messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage()); 
+                    }
                     break;
                 case Message.TYPE_FILEREQ : /*FILEREQ*/
                     // A gérer 
@@ -89,8 +93,9 @@ public class ChatController implements NItoController, GuiToController{
     }
 
     @Override
-    public void connect(String nickname) throws IOException {
+    public synchronized void connect(String nickname) throws IOException {
         //AddUser
+        System.out.println("Ajout de localuser : "+nickname);
         this.localUser = new User(nickname, InetAddress.getLocalHost());
         this.connectedUserList.addUser(this.localUser);
         this.chatControllerToChatNI.startListening();
@@ -100,7 +105,7 @@ public class ChatController implements NItoController, GuiToController{
     }
     
     @Override
-    public void logout() throws UnknownHostException, IOException {
+    public synchronized void logout() throws UnknownHostException, IOException {
         System.out.println("logout");
         synchronized(this.chatControllerToChatNI){
             //chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
@@ -111,7 +116,7 @@ public class ChatController implements NItoController, GuiToController{
     }
 
     @Override
-    public void sendMessage(String message, InetAddress dest) throws IOException {
+    public synchronized void sendMessage(String message, InetAddress dest) throws IOException {
         System.out.println("SENDING MESSAGE TO  : "+dest);
         MessageList.addToMessageDB(new MessageMessage(message), InetAddress.getLocalHost(), dest);
         synchronized(this.chatControllerToChatNI){
@@ -121,6 +126,9 @@ public class ChatController implements NItoController, GuiToController{
 
     @Override
     public void resetUnreadMessages(User user) {
-        this.connectedUserList.searchUser(user.getNickname()).resetUnreadMessages();
+        System.out.println("ResetMessage ConnectedUL : "+this.connectedUserList + " user : "+user);
+        synchronized(this.connectedUserList){
+            //this.connectedUserList.searchUser(user.getNickname()).resetUnreadMessages();
+        }
     }
 }

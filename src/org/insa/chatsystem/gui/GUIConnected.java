@@ -93,7 +93,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private void initLogoutButton(){
         this.logoutButton = new JButton("Logout");
         this.logoutButton.addActionListener(this);
-        //this.logoutButton.an
+        this.logoutButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
     }
     
     private void printMessagesWith(User user) throws UnknownHostException {

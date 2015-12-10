@@ -108,7 +108,9 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
 
     @Override
     public void send(String text, InetAddress destination) throws IOException {
-        guiToController.sendMessage(text, destination);
+        synchronized(this.guiToController){
+            guiToController.sendMessage(text, destination);
+        }
     }
 
     @Override
@@ -118,7 +120,9 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
 
     @Override
     public void resetUnreadMessages(User u) {
-        this.guiToController.resetUnreadMessages(u);
+        synchronized(this.guiToController){
+            this.guiToController.resetUnreadMessages(u);
+        }
     }
 
 }

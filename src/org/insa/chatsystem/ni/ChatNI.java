@@ -72,6 +72,7 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
 
     @Override
     public void startListening() {
+        System.out.println("StateListening : "+this.isListening);
         if(!isListening){
             this.isListening = true;
             this.udpReceiver.start();
