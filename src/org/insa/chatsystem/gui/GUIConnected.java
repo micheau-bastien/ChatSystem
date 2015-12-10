@@ -9,6 +9,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javax.swing.event.ListSelectionEvent;
@@ -21,7 +23,7 @@ import org.insa.chatsystem.users.User;
  * 
  * @author Laure 
 */
-public class GUIConnected extends JPanel implements GuiToGuiConnected, ActionListener, ListSelectionListener {
+public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnected, ActionListener, ListSelectionListener {
     
     private final GUIConnectedToGUI gUIConnectedToGUI;
     
@@ -29,7 +31,7 @@ public class GUIConnected extends JPanel implements GuiToGuiConnected, ActionLis
     private JPanel rightPan, leftPan;
     private JList<User> list;
     private User selectedUser;
-    private JTextField textToSend;
+    private JTextArea textToSend;
     private JTextArea messagesList;
     
     //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
@@ -66,8 +68,10 @@ public class GUIConnected extends JPanel implements GuiToGuiConnected, ActionLis
         this.messagesList.setEditable(false);
         JScrollPane scrollMessages = new JScrollPane(this.messagesList);
         
-        this.textToSend = new JTextField();
+        this.textToSend = new JTextArea();
         this.textToSend.setMaximumSize(new Dimension(this.textToSend.getMaximumSize().width, 50));
+        this.textToSend.addKeyListener(this);
+        
         this.sendButton = new JButton("Send");
         this.sendButton.addActionListener(this);
 
@@ -140,6 +144,35 @@ public class GUIConnected extends JPanel implements GuiToGuiConnected, ActionLis
 //this.refreshMessagesWith(user);
         }else{
             System.out.println("MESSAGE RECU SUR UNE AUTRE CONV");
-        }    
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+  
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() != KeyEvent.VK_ALT){
+            try {
+                System.out.println("guicotogui : "+gUIConnectedToGUI);
+                System.out.println("textosent : "+this.textToSend);
+                System.out.println("selectedUser : "+ this.selectedUser);
+                gUIConnectedToGUI.send(this.textToSend.getText(), this.selectedUser.getAddress());
+                this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
+                this.textToSend.setText("");
+                this.messagesList.repaint();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() == KeyEvent.VK_ALT){
+            this.textToSend.setText(this.textToSend.getText()+"\n");
+        }
     }
 }

@@ -103,7 +103,8 @@ public class ChatController implements NItoController, GuiToController{
     public void logout() throws UnknownHostException, IOException {
         System.out.println("logout");
         synchronized(this.chatControllerToChatNI){
-            chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
+            //chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
+            chatControllerToChatNI.sendMessage(this.connectedUserList.get(0).getAddress(), new MessageBye());
         }
         this.connectedUserList = new UserList();
         this.localUser = null;

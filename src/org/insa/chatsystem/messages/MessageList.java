@@ -21,7 +21,7 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
     
     public static void addToMessageDB(MessageMessage message, InetAddress source, InetAddress destination){
         System.out.println("Added to DB : " +message.toJSON());
-        messageDB.add(new MessageTextExchanged(message, source, source, new Date()));
+        messageDB.add(new MessageTextExchanged(message, source, destination, new Date()));
     }
     
     public static void addToMessageDB(MessageTextExchanged messageTextExchanged){
@@ -42,7 +42,8 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
         MessageList list = new MessageList();
         System.out.println("recherche des messages vers "+dest);
         for(MessageTextExchanged mte : messageDB){
-            if (mte.getSource().equals(dest) || (dest.equals(InetAddress.getByName("255.255.255.255")))){
+            System.out.println("Message de : "+mte.getSource()+ " à : " + mte.getDest() + " disant : "+mte.getMessage());
+            if (mte.getSource().equals(dest) && !mte.getSource().equals(InetAddress.getLocalHost()) || (dest.equals(InetAddress.getByName("255.255.255.255")))){
                 list.add(mte);
                 System.out.println("Received By You : " + mte.getMessage().toJSON());
             } else if (mte.getSource().equals(InetAddress.getLocalHost()) && mte.getDest().equals(dest)){

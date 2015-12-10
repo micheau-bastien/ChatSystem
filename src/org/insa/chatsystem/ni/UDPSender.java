@@ -16,31 +16,27 @@ import org.insa.chatsystem.messages.*;
  * @author Bastien
  */
 public class UDPSender {    
-    DatagramSocket socket;
-    DatagramPacket packet;
+    private final DatagramSocket socket;
+    private DatagramPacket packet;
     byte[] buf;
     
-    public UDPSender(DatagramSocket socket){
-        try {
-            this.socket = socket;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public UDPSender(DatagramSocket socket) {
+        this.socket = socket;
     }
     
     // TODO : Faire fonction String2INET
     private void sendJSON(InetAddress address, JSONObject json) throws IOException {
-            buf = json.toString().getBytes(Charset.forName("UTF-8"));
-            packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
-            socket.send(packet); 
+        this.buf = json.toString().getBytes(Charset.forName("UTF-8"));
+        this.packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
+        this.socket.send(packet); 
     }
 
     // TODO : Faire fonction String2INET
     public void sendMessage(InetAddress address, Message message) throws IOException{
-            System.out.println("Send Message" + message.toJSON());
-            buf = message.toJSON().toString().getBytes(Charset.forName("UTF-8"));
-            packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
-            socket.send(packet);
+        System.out.println("Send Message" + message.toJSON());
+        buf = message.toJSON().toString().getBytes(Charset.forName("UTF-8"));
+        packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
+        socket.send(packet);
     }
     
     public void sendMessage(String address, Message message) throws IOException{
