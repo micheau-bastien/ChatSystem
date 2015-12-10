@@ -86,6 +86,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private void initList(){
         this.list = new JList(this.gUIConnectedToGUI.fetchUserList());
         this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
+        this.list.setSelectedValue(this.selectedUser, true);
         this.list.addListSelectionListener(this); 
     }
     
@@ -95,6 +96,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     }
     
     private void printMessagesWith(User user) throws UnknownHostException {
+        System.out.println("user : " + user);
         MessageList messageExchanged = MessageList.with(user.getAddress());
         this.messagesList.setText("");
         for(MessageTextExchanged mte : messageExchanged){
@@ -111,6 +113,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         try {
             this.selectedUser = this.list.getSelectedValue();
             this.messagesList.setText("");
+            System.out.println("SelectedUser in list : " + this.list.getSelectedValue());
             this.printMessagesWith(this.list.getSelectedValue());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -139,8 +142,12 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
 
     @Override
     public void newMessage(User user, String message) {
-        if (this.selectedUser.getAddress().equals(user.getAddress())){
-            this.messagesList.setText(this.messagesList.getText() + "\n" + message);
+        System.out.println("SelectedUser : "+this.selectedUser);
+        if (this.selectedUser == null){
+            this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
+            this.list.setSelectedValue(this.gUIConnectedToGUI.fetchUserList().get(0), true);
+        } else if (this.selectedUser.getAddress().equals(user.getAddress())){
+            this.messagesList.setText(this.messagesList.getText() + "\n" + user.getNickname() + message);
 //this.refreshMessagesWith(user);
         }else{
             System.out.println("MESSAGE RECU SUR UNE AUTRE CONV");
