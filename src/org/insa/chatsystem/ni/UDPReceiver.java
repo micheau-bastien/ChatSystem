@@ -50,13 +50,6 @@ public class UDPReceiver extends Thread {
     }
 
     /**
-     * @return the socket
-     */
-    public DatagramSocket getSocket() {
-        return socket;
-    }
-
-    /**
      * @param udpReceiverToChatNI the udpReceiverToChatNI to set
      */
     public void setUdpReceiverToChatNI(UDPReceiverToChatNI udpReceiverToChatNI) {
