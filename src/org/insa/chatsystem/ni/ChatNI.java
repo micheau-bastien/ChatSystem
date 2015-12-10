@@ -18,7 +18,7 @@ import org.insa.chatsystem.messages.Message;
  */
 public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
     public static final int PORT = 8045;
-    
+    private boolean isListening = false;
     private UDPSender udpSender;
     private UDPReceiver udpReceiver;
     private TCPServer tcpServer;
@@ -72,6 +72,8 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
 
     @Override
     public void startListening() {
-        this.udpReceiver.start();
+        if(!isListening){
+            this.udpReceiver.start();
+        }
     }
 }
