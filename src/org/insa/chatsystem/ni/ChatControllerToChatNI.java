@@ -15,6 +15,7 @@ import org.insa.chatsystem.messages.Message;
  */
 public interface ChatControllerToChatNI {
     
-    void sendMessage(InetAddress destination, Message message) throws IOException;
+    public void sendMessage(InetAddress destination, Message message) throws IOException;
+    public void startListening();
     
 }

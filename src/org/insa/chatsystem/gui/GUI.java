@@ -116,4 +116,9 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
         guiToGUIConnected.newMessage(user, message);
     }
 
+    @Override
+    public void resetUnreadMessages(User u) {
+        this.guiToController.resetUnreadMessages(u);
+    }
+
 }

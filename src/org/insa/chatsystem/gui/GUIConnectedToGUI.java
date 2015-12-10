@@ -7,6 +7,7 @@ package org.insa.chatsystem.gui;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 
 /**
@@ -17,5 +18,6 @@ public interface GUIConnectedToGUI {
     public void send(String text, InetAddress destination) throws IOException;
     public void logout() throws IOException ;
     public UserList fetchUserList();
+    public void resetUnreadMessages(User u);
     
 }

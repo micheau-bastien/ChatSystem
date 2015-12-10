@@ -35,7 +35,6 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
         this.udpReceiver = UDPReceiver.sharedInstance(this.socket); // CECI EST UN NEW 
         this.udpReceiver.setUdpReceiverToChatNI(this);
         this.tcpServer = new TCPServer();
-        this.udpReceiver.start();
     }
 
     /**
@@ -69,5 +68,10 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
      */
     public void setNiToController(NItoController niToController) {
         this.niToController = niToController;
+    }
+
+    @Override
+    public void startListening() {
+        this.udpReceiver.start();
     }
 }

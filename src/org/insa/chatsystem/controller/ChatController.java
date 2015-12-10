@@ -43,7 +43,6 @@ public class ChatController implements NItoController, GuiToController{
     
     @Override
     public void rcvMessage(InetAddress source, Message message) throws IOException {
-        System.out.println("Recu message de type : " + message.getType());
         if(!source.equals(InetAddress.getLocalHost())){
             switch (message.getType()){
                 case Message.TYPE_HELLO : /*HELLO*/
@@ -54,6 +53,7 @@ public class ChatController implements NItoController, GuiToController{
                         if(((MessageHello)message).isReqReply()){
                             System.out.println("HELLO RENVOYE");
                             synchronized(this.chatControllerToChatNI){
+                                System.out.println("Renvoi de hello, chatControllertoNI : "+this.chatControllerToChatNI + " from : "+source +" localu : "+this.localUser);
                                 chatControllerToChatNI.sendMessage(source, new MessageHello(this.localUser.getNickname(), false));
                             }
                         }
@@ -68,10 +68,9 @@ public class ChatController implements NItoController, GuiToController{
                     this.connectedUserList.removeUser(this.connectedUserList.searchUser(source));
                     break;
                 case Message.TYPE_MESSAGE : /*MESSAGE*/
-                    if(messageObserver == null){
-                    }
                     MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
-                    messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage());
+                    this.connectedUserList.searchUser(source).addNewUnreadMessage();
+                    messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage()); 
                     break;
                 case Message.TYPE_FILEREQ : /*FILEREQ*/
                     // A gérer 
@@ -94,6 +93,7 @@ public class ChatController implements NItoController, GuiToController{
         //AddUser
         this.localUser = new User(nickname, InetAddress.getLocalHost());
         this.connectedUserList.addUser(this.localUser);
+        this.chatControllerToChatNI.startListening();
         synchronized(this.chatControllerToChatNI){
             chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
         }
@@ -117,5 +117,10 @@ public class ChatController implements NItoController, GuiToController{
         synchronized(this.chatControllerToChatNI){
             chatControllerToChatNI.sendMessage(dest, new MessageMessage(message));
         }
+    }
+
+    @Override
+    public void resetUnreadMessages(User user) {
+        this.connectedUserList.searchUser(user.getNickname()).resetUnreadMessages();
     }
 }

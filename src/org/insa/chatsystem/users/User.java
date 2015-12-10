@@ -15,6 +15,7 @@ import java.net.InetAddress;
 public class User {
     private String nickname;
     private InetAddress address;
+    private int nbUnreadMessages = 0;
     
     public User(String nickname, InetAddress address){
         this.nickname = nickname;
@@ -37,6 +38,18 @@ public class User {
     
     @Override
     public String toString(){
-        return (this.getNickname()+": "+this.getAddress().getHostAddress());
+        if (this.nbUnreadMessages == 0){
+            return (this.getNickname()+": "+this.getAddress().getHostAddress());
+        } else {
+            return ("["+this.nbUnreadMessages+"] "+this.getNickname()+": "+this.getAddress().getHostAddress());
+        }
+    }
+
+    public void addNewUnreadMessage(){
+        this.nbUnreadMessages++;
+    }
+    
+    public void resetUnreadMessages(){
+        this.nbUnreadMessages = 0;
     }
 }

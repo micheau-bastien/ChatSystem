@@ -6,9 +6,6 @@
 package org.insa.chatsystem;
 
 import org.insa.chatsystem.gui.GUI;
-import org.insa.chatsystem.ni.UDPReceiver;
-import org.insa.chatsystem.ni.UDPSender;
-import org.json.*;
 /**
  *
  * @author Bastien
