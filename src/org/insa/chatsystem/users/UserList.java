@@ -18,7 +18,6 @@ public class UserList extends DefaultListModel<User>{
     
     public UserList() throws UnknownHostException {
         super();
-        this.addUser(new User("All", InetAddress.getByName("255.255.255.255")));
         //this.addUser(new User("You", InetAddress.getLocalHost()));
     }
     
@@ -33,10 +32,20 @@ public class UserList extends DefaultListModel<User>{
     
     public void addUser(User user){
         this.addElement(user);
+        System.out.println("NEW USER : "+this.size() + "  " + this);
+    }
+    
+    public void delete(){
+        this.removeAllElements();
+        System.out.println("Delete , stays : " + this.size() + "  "+this);
     }
     
     public void removeUser(User user){
         this.removeElement(user);
+        System.out.println("Delete , stays : ");
+        for(int n =0; n<this.size(); n++){
+            System.out.println(this.get(n));
+        }
     }
     
     public User searchUser(String nickname){
@@ -57,4 +66,12 @@ public class UserList extends DefaultListModel<User>{
         return null;
     }
     
+    @Override
+    public String toString(){
+        String s = new String("User list : ");
+        for(int n =0; n<this.size(); n++){
+            s = s+"\n"+this.get(n);
+        }
+        return s;
+    }
 }

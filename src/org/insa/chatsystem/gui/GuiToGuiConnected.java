@@ -14,4 +14,5 @@ import org.insa.chatsystem.users.User;
  */
 public interface GuiToGuiConnected {
     public void newMessage(User user, String message) throws UnknownHostException;
+    public void connect();
 }

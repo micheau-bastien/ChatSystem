@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package org.insa.chatsystem.gui;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;

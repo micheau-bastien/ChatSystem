@@ -20,7 +20,6 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
     }
     
     public static void addToMessageDB(MessageMessage message, InetAddress source, InetAddress destination){
-        System.out.println("Added to DB : " +message.toJSON());
         messageDB.add(new MessageTextExchanged(message, source, destination, new Date()));
     }
     
@@ -40,14 +39,14 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
     
     public static MessageList with(InetAddress dest) throws UnknownHostException{
         MessageList list = new MessageList();
-        System.out.println("recherche des messages vers "+dest);
+        //System.out.println("recherche des messages vers "+dest);
         for(MessageTextExchanged mte : messageDB){
-            System.out.println("Message de : "+mte.getSource()+ " à : " + mte.getDest() + " disant : "+mte.getMessage());
+            //System.out.println("Message de : "+mte.getSource()+ " à : " + mte.getDest() + " disant : "+mte.getMessage());
             if (mte.getSource().equals(dest) && !mte.getSource().equals(InetAddress.getLocalHost()) || (dest.equals(InetAddress.getByName("255.255.255.255")))){
                 list.add(mte);
-                System.out.println("Received By You : " + mte.getMessage().toJSON());
+                //System.out.println("Received By You : " + mte.getMessage().toJSON());
             } else if (mte.getSource().equals(InetAddress.getLocalHost()) && mte.getDest().equals(dest)){
-                System.out.println("Sent By You : " + mte.getMessage().toJSON() + "to : " + mte.getDest());
+                //System.out.println("Sent By You : " + mte.getMessage().toJSON() + "to : " + mte.getDest());
                 list.add(mte);
             }
         }

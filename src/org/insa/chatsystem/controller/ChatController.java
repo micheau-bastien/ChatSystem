@@ -68,7 +68,7 @@ public class ChatController implements NItoController, GuiToController{
                         break;
                     case Message.TYPE_MESSAGE : /*MESSAGE*/
                         MessageList.addToMessageDB(((MessageMessage)message), source, InetAddress.getLocalHost());
-                        //this.connectedUserList.searchUser(source).addNewUnreadMessage();
+                        this.connectedUserList.searchUser(source).addNewUnreadMessage();
                         if (this.connectedUserList.searchUser(source) != null){
                             messageObserver.newMessage(connectedUserList.searchUser(source), ((MessageMessage)message).getMessage()); 
                         }
@@ -85,10 +85,10 @@ public class ChatController implements NItoController, GuiToController{
                         break;
                 }
             }else{
-                System.out.println("selfMessage : " +message);
+                System.out.println("selfMessage ! ");
             }
         }else{
-            System.out.println("Message reçu alors qu'on est pas connecté");
+            System.out.println("Message reçu alors qu'on est pas connecté de : "+source.getHostAddress());
         }
     }
 
@@ -97,6 +97,7 @@ public class ChatController implements NItoController, GuiToController{
         System.out.println("Ajout de localuser : "+nickname);
         this.localUser = new User(nickname, InetAddress.getLocalHost());
         this.connectedUserList.addUser(this.localUser);
+        this.connectedUserList.addUser(new User("All", InetAddress.getByName("255.255.255.255")));
         this.chatControllerToChatNI.startListening();
         synchronized(this.chatControllerToChatNI){
             chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageHello(this.localUser.getNickname(), true));
@@ -109,10 +110,12 @@ public class ChatController implements NItoController, GuiToController{
         System.out.println("logout");
         synchronized(this.chatControllerToChatNI){
             //chatControllerToChatNI.sendMessage(InetAddress.getByName("255.255.255.255"), new MessageBye());
-            chatControllerToChatNI.sendMessage(this.connectedUserList.get(0).getAddress(), new MessageBye());
+            chatControllerToChatNI.sendMessage(this.connectedUserList.get(1).getAddress(), new MessageBye());
         }
         this.connectedUserList = new UserList();
         this.localUser = null;
+        this.connectedUserList.delete();
+        this.isConnected = false;
     }
 
     @Override
@@ -128,7 +131,7 @@ public class ChatController implements NItoController, GuiToController{
     public void resetUnreadMessages(User user) {
         System.out.println("ResetMessage ConnectedUL : "+this.connectedUserList + " user : "+user);
         synchronized(this.connectedUserList){
-            //this.connectedUserList.searchUser(user.getNickname()).resetUnreadMessages();
+            this.connectedUserList.searchUser(user.getNickname()).resetUnreadMessages();
         }
     }
 }

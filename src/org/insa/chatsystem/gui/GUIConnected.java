@@ -33,11 +33,13 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private User selectedUser;
     private JTextField textToSend;
     private JTextArea messagesList;
+    private Color background = Color.decode("#FAFAFA");
     
     //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
     private final JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     
     public GUIConnected(GUIConnectedToGUI gUIConnectedToGUI) {
+        this.hPane.setBackground(background);
         this.gUIConnectedToGUI = gUIConnectedToGUI;
         this.setLayout(new BorderLayout(2,2));
         
@@ -53,6 +55,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private void initLeftPan(){
         //Create Left Pane
         this.leftPan = new JPanel();
+        this.leftPan.setBackground(background);
         this.leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
         
         //Fill Left Pane with initialized elements
@@ -76,6 +79,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         this.sendButton.addActionListener(this);
 
         this.rightPan = new JPanel();
+        this.rightPan.setBackground(background);
         this.rightPan.setLayout(new BoxLayout(this.rightPan, BoxLayout.Y_AXIS));
         this.rightPan.add(new JLabel("Messages"));
         this.rightPan.add(scrollMessages);
@@ -85,9 +89,9 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     
     private void initList(){
         this.list = new JList(this.gUIConnectedToGUI.fetchUserList());
-        this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
         this.list.setSelectedIndex(0);
         this.list.addListSelectionListener(this); 
+        this.list.setAlignmentX(Container.CENTER_ALIGNMENT);
     }
     
     private void initLogoutButton(){
@@ -157,6 +161,8 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
             this.messagesList.setText(this.messagesList.getText() + "\n" + user.getNickname()+ ": " + message);
 //this.refreshMessagesWith(user);
         }else{
+            this.list.setModel(this.gUIConnectedToGUI.fetchUserList());
+            this.list.repaint();
             System.out.println("MESSAGE RECU SUR UNE AUTRE CONV");
         }
     }
@@ -188,5 +194,11 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() == KeyEvent.VK_ALT){
             this.textToSend.setText(this.textToSend.getText()+"\n");
         }
+    }
+
+    @Override
+    public void connect() {
+        
+        this.list.setModel(this.gUIConnectedToGUI.fetchUserList());
     }
 }

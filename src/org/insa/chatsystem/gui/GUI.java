@@ -5,6 +5,7 @@
  */
 package org.insa.chatsystem.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
@@ -94,6 +95,7 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
         this.guiToController.connect(nickname);
         System.out.println("On lance la GUI Connected ! ");
         this.setContentPane(this.guiConnected);
+        this.guiToGUIConnected.connect();
         this.draw();
     }
 

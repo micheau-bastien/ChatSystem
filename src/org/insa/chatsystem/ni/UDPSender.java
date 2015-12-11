@@ -33,10 +33,10 @@ public class UDPSender {
 
     // TODO : Faire fonction String2INET
     public void sendMessage(InetAddress address, Message message) throws IOException{
-        System.out.println("Send Message" + message.toJSON());
         buf = message.toJSON().toString().getBytes(Charset.forName("UTF-8"));
         packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
         socket.send(packet);
+        System.out.println("Send Message" + message.toJSON()+" to: "+address);
     }
     
     public void sendMessage(String address, Message message) throws IOException{

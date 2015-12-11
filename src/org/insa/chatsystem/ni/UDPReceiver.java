@@ -41,7 +41,7 @@ public class UDPReceiver extends Thread {
                 socket.receive(this.packet);
                 String data = new String(packet.getData(), 0, packet.getLength());
                 JSONObject dataJSON = new JSONObject(data);
-                System.out.println("Reçu : "+dataJSON);
+                System.out.println("Reçu : "+dataJSON+" from: "+packet.getAddress());
                 this.udpReceiverToChatNI.rcvdMessage(packet.getAddress(), Message.fromJSON(dataJSON));
             } catch (Exception e) {
                 e.printStackTrace();
