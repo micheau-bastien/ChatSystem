@@ -27,13 +27,14 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     
     private final GUIConnectedToGUI gUIConnectedToGUI;
     
+    private JLabel titre;
     private JButton logoutButton, sendButton;
     private JPanel rightPan, leftPan;
     private JList<User> list;
     private User selectedUser;
     private JTextField textToSend;
     private JTextArea messagesList;
-    private Color background = Color.decode("#FAFAFA");
+    private Color background = Color.decode("#F5F5F5");
     
     //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
     private final JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -55,21 +56,26 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private void initLeftPan(){
         //Create Left Pane
         this.leftPan = new JPanel();
-        this.leftPan.setBackground(background);
-        this.leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
-        
+        this.leftPan.setBackground(Color.decode("#E0E0E0"));
+        this.leftPan.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.DARK_GRAY));
+        //this.leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
+        this.leftPan.setLayout(new GridLayout(3, 0, 20, 20));
         //Fill Left Pane with initialized elements
         this.initLogoutButton();
         this.initList();
-        leftPan.add(new JLabel("Connected User List"), BorderLayout.WEST);
-        leftPan.add(list, BorderLayout.EAST);
-        leftPan.add(this.logoutButton, BorderLayout.SOUTH);
+        
+        leftPan.add(new JLabel("Connected User List"));
+        leftPan.add(list);
+        leftPan.add(this.logoutButton);
     }
     
     private void initRightPan(){
         this.messagesList = new JTextArea();
         this.messagesList.setEditable(false);
+        this.messagesList.setBorder(BorderFactory.createEmptyBorder());
+        this.messagesList.setBackground(background);
         JScrollPane scrollMessages = new JScrollPane(this.messagesList);
+        scrollMessages.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.DARK_GRAY));
         
         this.textToSend = new JTextField();
         this.textToSend.setMaximumSize(new Dimension(this.textToSend.getMaximumSize().width, 50));
@@ -81,7 +87,11 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         this.rightPan = new JPanel();
         this.rightPan.setBackground(background);
         this.rightPan.setLayout(new BoxLayout(this.rightPan, BoxLayout.Y_AXIS));
-        this.rightPan.add(new JLabel("Messages"));
+        titre = new JLabel("Messages");
+        titre.setFont(new Font("helvetica neue", Font.PLAIN, 18));
+        this.rightPan.add(new JLabel("  "));
+        this.rightPan.add(titre);
+        this.rightPan.add(new JLabel("  "));
         this.rightPan.add(scrollMessages);
         this.rightPan.add(this.textToSend);
         this.rightPan.add(this.sendButton);
@@ -90,8 +100,10 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private void initList(){
         this.list = new JList(this.gUIConnectedToGUI.fetchUserList());
         this.list.setSelectedIndex(0);
-        this.list.addListSelectionListener(this); 
-        this.list.setAlignmentX(Container.CENTER_ALIGNMENT);
+        this.list.addListSelectionListener(this);
+        this.list.setFont(new Font("helvetica neue", Font.PLAIN, 15));
+        this.list.setBackground(Color.decode("#E0E0E0"));
+        this.setMaximumSize(new Dimension(100, 10));
     }
     
     private void initLogoutButton(){
@@ -125,6 +137,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
             this.messagesList.setText("");
             System.out.println("SelectedUser in list : " + this.list.getSelectedValue());
             this.printMessagesWith(this.selectedUser);
+            this.titre.setText("Messages with "+this.selectedUser.getNickname());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -42,9 +42,13 @@ public class GUIConnection extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            gUIConnectionToGUI.connect(this.nicknameTextField.getText());
+            gUIConnectionToGUI.connect(this.getNickname());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    private String getNickname(){
+        return this.nicknameTextField.getText();
     }
 }
