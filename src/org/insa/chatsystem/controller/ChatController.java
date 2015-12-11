@@ -113,6 +113,7 @@ public class ChatController implements NItoController, GuiToController{
         }
         this.connectedUserList = new UserList();
         this.localUser = null;
+        this.isConnected =false;
     }
 
     @Override
