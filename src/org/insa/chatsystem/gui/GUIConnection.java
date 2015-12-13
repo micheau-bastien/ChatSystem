@@ -11,7 +11,7 @@ import java.awt.event.*;
 import java.net.SocketException;
 
 /**
- * First view of the ChatSystem, the user will set his nickname and connect.
+ * First view of the ChatSystem, the user will set his nickname and connect. This class could and should be singleton.
  * @author Bastien
  */
 public class GUIConnection extends JPanel implements ActionListener{

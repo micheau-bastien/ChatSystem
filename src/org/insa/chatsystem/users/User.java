@@ -9,7 +9,7 @@ import java.net.InetAddress;
 
 
 /**
- *
+ * Represent the User object.
  * @author Bastien
  */
 public class User {
@@ -18,9 +18,9 @@ public class User {
     private int nbUnreadMessages = 0;
     
     /**
-     *
+     * Create the User object with his nickname and his IP address.
      * @param nickname
-     * @param address
+     * @param address IP
      */
     public User(String nickname, InetAddress address){
         this.nickname = nickname;
@@ -28,14 +28,14 @@ public class User {
     }
 
     /**
-     * @return the nickname
+     * @return the user's nickname
      */
     public String getNickname() {
         return nickname;
     }
 
     /**
-     * @return the address
+     * @return the user's address
      */
     public InetAddress getAddress() {
         return address;
@@ -51,14 +51,14 @@ public class User {
     }
 
     /**
-     *
+     * Add a new unread message from this user.
      */
     public void addNewUnreadMessage(){
         this.nbUnreadMessages++;
     }
     
     /**
-     *
+     * Reset the unread messages counter received from this user.
      */
     public void resetUnreadMessages(){
         this.nbUnreadMessages = 0;

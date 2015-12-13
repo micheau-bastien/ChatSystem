@@ -7,11 +7,10 @@ package org.insa.chatsystem.users;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
- *
+ * List of all the connected users. This class could and should be singleton.
  * @author Bastien
  */
 public class UserList extends DefaultListModel<User>{
@@ -27,7 +26,7 @@ public class UserList extends DefaultListModel<User>{
     
     /**
      * Check if the user is already connected.
-     * @param address
+     * @param address of the user
      * @return true if the user is already connected or false elsewise.
      */
     public boolean isAlreadyConnected(InetAddress address){
@@ -41,7 +40,7 @@ public class UserList extends DefaultListModel<User>{
     
     /**
      * Add user to the connected user list.
-     * @param user
+     * @param user to be added
      */
     public void addUser(User user){
         this.addElement(user);
@@ -58,7 +57,7 @@ public class UserList extends DefaultListModel<User>{
     
     /**
      * Remove the user from the cnnected user list.
-     * @param user
+     * @param user to be removed
      */
     public void removeUser(User user){
         this.removeElement(user);
@@ -75,7 +74,7 @@ public class UserList extends DefaultListModel<User>{
      */
     public User searchUser(String nickname){
         for(int n =0; n<this.size(); n++){
-            if(this.get(n).getNickname() == nickname){
+            if(this.get(n).getNickname().equals(nickname)){
                 return this.get(n);
             }
         }

@@ -14,7 +14,7 @@ import org.insa.chatsystem.controller.NItoController;
 import org.insa.chatsystem.messages.Message;
 
 /**
- * ChatNI class to handle UDP and TCP (in the futur) receiver and senders.
+ * ChatNI class to handle UDP and TCP (in the futur) receiver and senders. This class could and should be singleton.
  * @author Bastien
  */
 public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{

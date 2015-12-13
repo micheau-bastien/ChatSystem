@@ -20,8 +20,8 @@ import org.insa.chatsystem.messages.MessageTextExchanged;
 import org.insa.chatsystem.users.User;
 
 /**
- * 
- * @author Laure 
+ * Connected GUI. This class could and should be singleton.
+ * @author Laure&Bastien 
 */
 public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnected, ActionListener, ListSelectionListener {
     
@@ -136,7 +136,6 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
                 this.selectedUser = this.list.getSelectedValue();
             }
             this.selectedUser.resetUnreadMessages();
-            this.messagesList.setText("");
             System.out.println("SelectedUser in list : " + this.list.getSelectedValue());
             this.printMessagesWith(this.selectedUser);
             this.titre.setText("Messages with "+this.selectedUser.getNickname());
@@ -176,6 +175,8 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         if (this.selectedUser == null){
             this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
             this.list.setSelectedValue(this.gUIConnectedToGUI.fetchUserList().get(0), true);
+            /*this.selectedUser = user;
+            this.list.setSelectedValue(this.gUIConnectedToGUI.fetchUserList().indexOf(user), true);*/
         } else if (this.selectedUser.getAddress().equals(user.getAddress())){
             user.resetUnreadMessages();
             this.messagesList.setText(this.messagesList.getText() + "\n" + user.getNickname()+ ": " + message);
@@ -194,9 +195,6 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() != KeyEvent.VK_ALT){
             try {
-                System.out.println("guicotogui : "+gUIConnectedToGUI);
-                System.out.println("textosent : "+this.textToSend);
-                System.out.println("selectedUser : "+ this.selectedUser);
                 gUIConnectedToGUI.sendMessage(this.selectedUser, this.textToSend.getText());
                 this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
                 this.textToSend.setText("");

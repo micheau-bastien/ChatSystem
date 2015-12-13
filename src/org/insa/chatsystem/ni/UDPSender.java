@@ -12,7 +12,7 @@ import org.json.*;
 import org.insa.chatsystem.messages.*;
 
 /**
- *
+ * This class will send all the UDP messages (Hello|Bye|TextMessages). This class could and should be singleton.
  * @author Bastien
  */
 public class UDPSender {    
@@ -21,7 +21,7 @@ public class UDPSender {
     byte[] buf;
     
     /**
-     *
+     * Creates the UDP sender Object binded to the socket.
      * @param socket
      */
     public UDPSender(DatagramSocket socket) {
@@ -38,9 +38,9 @@ public class UDPSender {
     // TODO : Faire fonction String2INET
 
     /**
-     *
-     * @param address
-     * @param message
+     * Send the message to the destination.
+     * @param address Address of destination.
+     * @param message The message object, can be : Hello|Bye|Message|FileReq|FileReqRep.
      * @throws IOException
      */
     public void sendMessage(InetAddress address, Message message) throws IOException{
@@ -51,9 +51,9 @@ public class UDPSender {
     }
     
     /**
-     *
-     * @param address
-     * @param message
+     * Send the message to the destination.
+     * @param address Address of destination.
+     * @param message The message object, can be : Hello|Bye|Message|FileReq|FileReqRep.
      * @throws IOException
      */
     public void sendMessage(String address, Message message) throws IOException{
@@ -65,9 +65,9 @@ public class UDPSender {
     }
     
     /**
-     *
-     * @param address
-     * @param json
+     * Send the message to the destination.
+     * @param address Address of destination.
+     * @param json The JSON Object to be sent.
      */
     public void sendJSON(String address, JSONObject json){
         try {

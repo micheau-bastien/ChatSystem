@@ -10,7 +10,7 @@ import org.insa.chatsystem.messages.Message;
 import org.json.*;
 
 /**
- *
+ * Receive all the UDP packet to localhost
  * @author Bastien
  */
 public class UDPReceiver extends Thread {
@@ -24,19 +24,11 @@ public class UDPReceiver extends Thread {
     private UDPReceiver(){
         packet = new DatagramPacket(buf, buf.length); 
     }
-
-    /**
-     *
-     * @return
-     */
-    public static UDPReceiver sharedInstance(){
-        return INSTANCE;
-    }
     
     /**
-     *
+     * Get the singleton UDP receiver wich will listen on the socket.
      * @param socket
-     * @return
+     * @return The UDP receiver.
      */
     public static UDPReceiver sharedInstance(DatagramSocket socket){
         UDPReceiver.socket = socket;

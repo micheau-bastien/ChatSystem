@@ -11,15 +11,15 @@ import java.net.Socket;
 import org.insa.chatsystem.messages.Message;
 
 /**
- *
+ * Transmit the UDPReceiver messages to the ChatNI.
  * @author Bastien
  */
 public interface UDPReceiverToChatNI {
 
     /**
-     *
-     * @param source
-     * @param message
+     * Handle the reception of the new Message.
+     * @param source The address of the message's sender.
+     * @param message The message object, can be : Hello|Bye|Message|FileReq|FileReqRep.
      * @throws IOException
      */
     void rcvdMessage(InetAddress source, Message message) throws IOException;
