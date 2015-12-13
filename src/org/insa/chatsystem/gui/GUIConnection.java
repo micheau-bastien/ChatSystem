@@ -53,4 +53,5 @@ public class GUIConnection extends JPanel implements ActionListener{
     private String getNickname(){
         return this.nicknameTextField.getText();
     }
+
 }

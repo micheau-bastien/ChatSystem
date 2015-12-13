@@ -191,11 +191,8 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     public void keyTyped(KeyEvent e) {}
 
     @Override
-    public void keyPressed(KeyEvent e) {}
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() != KeyEvent.VK_ALT){
+    public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() != KeyEvent.VK_ALT){
             try {
                 System.out.println("guicotogui : "+gUIConnectedToGUI);
                 System.out.println("textosent : "+this.textToSend);
@@ -210,6 +207,11 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() == KeyEvent.VK_ALT){
             this.textToSend.setText(this.textToSend.getText()+"\n");
         }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 
     /**
