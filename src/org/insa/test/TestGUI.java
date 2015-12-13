@@ -11,6 +11,11 @@ import org.insa.chatsystem.gui.*;
  * @author Bastien
  */
 public class TestGUI {
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args){       
         try {
             GUI fenetre = new GUI();

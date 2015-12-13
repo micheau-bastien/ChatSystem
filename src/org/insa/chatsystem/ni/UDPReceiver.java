@@ -25,10 +25,19 @@ public class UDPReceiver extends Thread {
         packet = new DatagramPacket(buf, buf.length); 
     }
 
+    /**
+     *
+     * @return
+     */
     public static UDPReceiver sharedInstance(){
         return INSTANCE;
     }
     
+    /**
+     *
+     * @param socket
+     * @return
+     */
     public static UDPReceiver sharedInstance(DatagramSocket socket){
         UDPReceiver.socket = socket;
         return UDPReceiver.INSTANCE;

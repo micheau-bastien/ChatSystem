@@ -15,11 +15,19 @@ import org.json.JSONObject;
 public class MessageMessage extends Message {
     private String message;
     
+    /**
+     * Build an Text Message object with the text passed in argument.
+     * @param message
+     */
     public MessageMessage (String message){
         this.message = message;
         this.type = Message.TYPE_MESSAGE;
     }
     
+    /**
+     * Transform the message in JSON ready to be sent.
+     * @return the JSON object from the Message
+     */
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();

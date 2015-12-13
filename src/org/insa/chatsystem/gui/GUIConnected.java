@@ -34,19 +34,22 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private User selectedUser;
     private JTextField textToSend;
     private JTextArea messagesList;
-    private Color background = Color.decode("#F5F5F5");
+    private final Color background = Color.decode("#F5F5F5");
+    private final Color leftMenuColor = Color.decode("#F5F5F5");
     
     //hPane c'est notre premier panel splité en deux (la userliste et la partie onglets et messages à envoyer)
     private final JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     
+    /**
+     * Buil the GUI Connected
+     * @param gUIConnectedToGUI
+     */
     public GUIConnected(GUIConnectedToGUI gUIConnectedToGUI) {
         this.hPane.setBackground(background);
         this.gUIConnectedToGUI = gUIConnectedToGUI;
         this.setLayout(new BorderLayout(2,2));
-        
         this.initRightPan();
         this.initLeftPan();
-        
         //Fill Right Pane with initialized elements
         this.hPane.setRightComponent(rightPan);
         this.hPane.setLeftComponent(leftPan);
@@ -54,9 +57,8 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     }
     
     private void initLeftPan(){
-        //Create Left Pane
         this.leftPan = new JPanel();
-        this.leftPan.setBackground(Color.decode("#E0E0E0"));
+        this.leftPan.setBackground(this.leftMenuColor);
         this.leftPan.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.DARK_GRAY));
         //this.leftPan.setLayout(new BoxLayout(leftPan, BoxLayout.Y_AXIS));
         this.leftPan.setLayout(new GridLayout(3, 0, 20, 20));
@@ -102,7 +104,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         this.list.setSelectedIndex(0);
         this.list.addListSelectionListener(this);
         this.list.setFont(new Font("helvetica neue", Font.PLAIN, 15));
-        this.list.setBackground(Color.decode("#E0E0E0"));
+        this.list.setBackground(this.leftMenuColor);
         this.setMaximumSize(new Dimension(100, 10));
     }
     
@@ -133,7 +135,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
             }else{
                 this.selectedUser = this.list.getSelectedValue();
             }
-            this.gUIConnectedToGUI.resetUnreadMessages(selectedUser);
+            this.selectedUser.resetUnreadMessages();
             this.messagesList.setText("");
             System.out.println("SelectedUser in list : " + this.list.getSelectedValue());
             this.printMessagesWith(this.selectedUser);
@@ -147,7 +149,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.sendButton){
             try {
-                gUIConnectedToGUI.send(this.textToSend.getText(), this.selectedUser.getAddress());
+                gUIConnectedToGUI.sendMessage(this.selectedUser, this.textToSend.getText());
                 this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
                 this.textToSend.setText("");
                 this.messagesList.repaint();
@@ -163,6 +165,11 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         }
     }
 
+    /**
+     * Will display the received message from the Controller to the Connected GUI to be displayed.
+     * @param user
+     * @param message
+     */
     @Override
     public void newMessage(User user, String message) {
         System.out.println("SelectedUser : "+this.selectedUser);
@@ -170,7 +177,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
             this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
             this.list.setSelectedValue(this.gUIConnectedToGUI.fetchUserList().get(0), true);
         } else if (this.selectedUser.getAddress().equals(user.getAddress())){
-            this.gUIConnectedToGUI.resetUnreadMessages(user);
+            user.resetUnreadMessages();
             this.messagesList.setText(this.messagesList.getText() + "\n" + user.getNickname()+ ": " + message);
 //this.refreshMessagesWith(user);
         }else{
@@ -181,14 +188,10 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-  
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        
-    }
+    public void keyPressed(KeyEvent e) {}
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -197,7 +200,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
                 System.out.println("guicotogui : "+gUIConnectedToGUI);
                 System.out.println("textosent : "+this.textToSend);
                 System.out.println("selectedUser : "+ this.selectedUser);
-                gUIConnectedToGUI.send(this.textToSend.getText(), this.selectedUser.getAddress());
+                gUIConnectedToGUI.sendMessage(this.selectedUser, this.textToSend.getText());
                 this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
                 this.textToSend.setText("");
                 this.messagesList.repaint();
@@ -209,9 +212,12 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         }
     }
 
+    /**
+     * When passing from disconnected state to connected state, you need to update the userlist.
+     */
     @Override
     public void connect() {
-        
+        // To test : Peut surement être supprimé depuis que l'on reset proprement le model des users.
         this.list.setModel(this.gUIConnectedToGUI.fetchUserList());
     }
 }

@@ -8,7 +8,7 @@ package org.insa.chatsystem.messages;
 import org.json.JSONObject;
 
 /**
- *
+ * Hello message class.
  * @author Bastien
  */
 public class MessageHello extends Message {
@@ -16,12 +16,21 @@ public class MessageHello extends Message {
     private boolean reqReply;
     private String nickname;
     
+    /**
+     * Build the message.
+     * @param nickname
+     * @param reqReply
+     */
     public MessageHello (String nickname, boolean reqReply){
         this.nickname = nickname;
         this.reqReply=reqReply;
         this.type = Message.TYPE_HELLO;
     }
 
+    /**
+     * Transform the message in JSON ready to be sent.
+     * @return the JSON object
+     */
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();

@@ -6,7 +6,6 @@
 package org.insa.chatsystem.gui;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 
@@ -15,9 +14,24 @@ import org.insa.chatsystem.users.UserList;
  * @author laure
  */
 public interface GUIConnectedToGUI {
-    public void send(String text, InetAddress destination) throws IOException;
+
+    /**
+     * Transmit the message to be sent and the destination user from the connected view to the controller.
+     * @param destUser
+     * @param text
+     * @throws IOException
+     */
+    public void sendMessage(User destUser, String text) throws IOException;
+
+    /**
+     * Transmit the logout signal launched by a click on the logout button.
+     * @throws IOException
+     */
     public void logout() throws IOException ;
-    public UserList fetchUserList();
-    public void resetUnreadMessages(User u);
-    
+
+    /**
+     * Ask to the GUI to fetch the connected user list
+     * @return The list of connected users
+     */
+    public UserList fetchUserList();    
 }

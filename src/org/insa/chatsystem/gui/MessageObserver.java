@@ -13,5 +13,12 @@ import org.insa.chatsystem.users.User;
  * @author Bastien
  */
 public interface MessageObserver {
+
+    /**
+     * Will transmit the received message from the Controller to the Connected GUI to be displayed.
+     * @param user
+     * @param message
+     * @throws UnknownHostException
+     */
     public void newMessage(User user, String message) throws UnknownHostException;
 }

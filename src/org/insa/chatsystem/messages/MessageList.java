@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 /**
- *
+ * The list of all the messages exchanged since the program started
  * @author Bastien
  */
 public class MessageList extends ArrayList<MessageTextExchanged> {
@@ -19,24 +19,30 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
         super();
     }
     
+    /**
+     * Add a message to the database.
+     * @param message
+     * @param source
+     * @param destination
+     */
     public static void addToMessageDB(MessageMessage message, InetAddress source, InetAddress destination){
         messageDB.add(new MessageTextExchanged(message, source, destination, new Date()));
     }
     
+    /**
+     * Add a message to the database.
+     * @param messageTextExchanged
+     */
     public static void addToMessageDB(MessageTextExchanged messageTextExchanged){
         messageDB.add(messageTextExchanged);
     }
     
-    public static MessageList from(InetAddress source){
-        MessageList list = new MessageList();
-        for(MessageTextExchanged mte : messageDB){
-            if (mte.getSource().equals(source)){
-                list.add(mte);
-            }
-        }
-        return list;
-    }
-    
+    /**
+     * Gives all the messages between the local user andanother user.
+     * @param dest
+     * @return all the messages between the local user andanother user.
+     * @throws UnknownHostException
+     */
     public static MessageList with(InetAddress dest) throws UnknownHostException{
         MessageList list = new MessageList();
         //System.out.println("recherche des messages vers "+dest);
@@ -47,16 +53,6 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
                 //System.out.println("Received By You : " + mte.getMessage().toJSON());
             } else if (mte.getSource().equals(InetAddress.getLocalHost()) && mte.getDest().equals(dest)){
                 //System.out.println("Sent By You : " + mte.getMessage().toJSON() + "to : " + mte.getDest());
-                list.add(mte);
-            }
-        }
-        return list;
-    }
-    
-    public static MessageList to(InetAddress dest){
-        MessageList list = new MessageList();
-        for(MessageTextExchanged mte : messageDB){
-            if (mte.getDest().equals(dest)){
                 list.add(mte);
             }
         }

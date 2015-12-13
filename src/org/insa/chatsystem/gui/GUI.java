@@ -5,19 +5,17 @@
  */
 package org.insa.chatsystem.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import org.insa.chatsystem.controller.*;
 import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 /**
- *
+ * The handler of all GUI in the chatSystem, can take two states, connection or connected.
  * @author Bastien
  */
 public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, GUIConnectedToGUI {
@@ -26,6 +24,11 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
     private final GUIConnected guiConnected;
     private final GUIConnection guiConnection;
     
+    /**
+     * Build up the GUI.
+     * @throws SocketException
+     * @throws UnknownHostException
+     */
     public GUI() throws SocketException, UnknownHostException {
         GUI.guiToController = new ChatController(this);
         this.guiConnected = new GUIConnected(this);
@@ -51,20 +54,18 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
         this.draw();
     }
     
-    private static void shutDown(){
-        try {
-            GUI.guiToController.logout();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.exit(0);
-    }
-    
+    /**
+     * Redraw the GUI.
+     */
     public void draw(){
         this.pack();
         this.setVisible(true);
     }    
     
+    /**
+     * Before the window closure, this function sends a logout message to everyone.
+     * @param e
+     */
     public void WindowClosed(WindowEvent e) {
         try {
             System.out.println("ON S'ETTEINT");
@@ -90,20 +91,33 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
         return guiToController;
     }
 
+    /**
+     * Function will connect the local user, called by a click on the connect button from the GUIConnection view.
+     * @param nickname
+     * @throws IOException
+     */
     @Override
     public void connect(String nickname)  throws IOException  {
-        this.guiToController.connect(nickname);
         System.out.println("On lance la GUI Connected ! ");
+        GUI.guiToController.connect(nickname);
         this.setContentPane(this.guiConnected);
-        this.guiToGUIConnected.connect();
+        GUI.guiToGUIConnected.connect();
         this.draw();
     }
 
+    /**
+     * Fetch the actual connected user list from the Controller.
+     * @return the list of connected user.
+     */
     @Override
     public UserList fetchUserList() {
         return guiToController.getUserList();
     }
 
+    /**
+     * Function will disconnect the local user, called by a click on the logout button from the GUIConnection view.
+     * @throws IOException
+     */
     @Override
     public void logout() throws IOException {
         this.guiToController.logout();
@@ -111,23 +125,27 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
         this.draw();
     }
 
+    /**
+     * Transmit the message to be sent and the destination user from the connected view to the controller.
+     * @param destUser
+     * @param text
+     * @throws IOException
+     */
     @Override
-    public void send(String text, InetAddress destination) throws IOException {
+    public void sendMessage(User destUser, String text) throws IOException {
         synchronized(this.guiToController){
-            guiToController.sendMessage(text, destination);
+            guiToController.sendMessage(destUser, text);
         }
     }
 
+    /**
+     * Will transmit the received message from the Controller to the Connected GUI to be displayed.
+     * @param user
+     * @param message
+     * @throws UnknownHostException
+     */
     @Override
     public void newMessage(User user, String message) throws UnknownHostException {
         guiToGUIConnected.newMessage(user, message);
     }
-
-    @Override
-    public void resetUnreadMessages(User u) {
-        synchronized(this.guiToController){
-            this.guiToController.resetUnreadMessages(u);
-        }
-    }
-
 }

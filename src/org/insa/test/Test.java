@@ -17,9 +17,18 @@ import org.insa.chatsystem.ni.ChatNI;
 
 public class Test {
     int a = 0;
+
+    /**
+     *
+     */
     public Test(){
         int a =2;
     }
+
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Test a = new Test();
         System.out.println(a.a);

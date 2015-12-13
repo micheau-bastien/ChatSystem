@@ -29,6 +29,12 @@ public class TCPSender extends Thread {
     private int port;
     private InetAddress address;
     
+    /**
+     *
+     * @param address
+     * @param port
+     * @throws IOException
+     */
     public TCPSender(InetAddress address, int port) throws IOException {
         this.address = address;
         this.port = port;

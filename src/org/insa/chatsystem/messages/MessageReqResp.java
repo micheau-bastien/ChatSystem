@@ -13,13 +13,21 @@ import org.json.JSONObject;
  */
 public class MessageReqResp extends Message {
     
-    private boolean ok;
+    private final boolean ok;
     
+    /**
+     * Build a Message req resp object.
+     * @param ok
+     */
     public MessageReqResp (boolean ok){
         this.ok = ok;
         this.type = Message.TYPE_FILEREQRESP;
     }
     
+    /**
+     * Gives the JSON object from the message.
+     * @return The JSON object from the message
+     */
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();
@@ -29,7 +37,7 @@ public class MessageReqResp extends Message {
     }
 
     /**
-     * @return the ok
+     * @return true if the file can be sent or false elsewise.
      */
     public boolean isOk() {
         return ok;

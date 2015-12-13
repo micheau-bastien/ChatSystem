@@ -19,6 +19,11 @@ public class TCPReceiver extends Thread {
     private final Socket socket;
     private OutputStream output;
     
+    /**
+     *
+     * @param socket
+     * @param output
+     */
     public TCPReceiver (Socket socket, OutputStream output){
         this.socket = socket;
         this.output = output;

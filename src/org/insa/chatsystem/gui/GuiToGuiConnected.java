@@ -13,6 +13,17 @@ import org.insa.chatsystem.users.User;
  * @author Bastien
  */
 public interface GuiToGuiConnected {
+
+    /**
+     * Transmit the new message to the connected gui.
+     * @param user
+     * @param message
+     * @throws UnknownHostException
+     */
     public void newMessage(User user, String message) throws UnknownHostException;
+
+    /**
+     * Reconnect the GUI Connected view by refreshing the list of connected users.
+     */
     public void connect();
 }

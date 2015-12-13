@@ -20,6 +20,10 @@ public class UDPSender {
     private DatagramPacket packet;
     byte[] buf;
     
+    /**
+     *
+     * @param socket
+     */
     public UDPSender(DatagramSocket socket) {
         this.socket = socket;
     }
@@ -32,6 +36,13 @@ public class UDPSender {
     }
 
     // TODO : Faire fonction String2INET
+
+    /**
+     *
+     * @param address
+     * @param message
+     * @throws IOException
+     */
     public void sendMessage(InetAddress address, Message message) throws IOException{
         buf = message.toJSON().toString().getBytes(Charset.forName("UTF-8"));
         packet = new DatagramPacket(buf, buf.length, address, ChatNI.PORT);
@@ -39,6 +50,12 @@ public class UDPSender {
         System.out.println("Send Message" + message.toJSON()+" to: "+address);
     }
     
+    /**
+     *
+     * @param address
+     * @param message
+     * @throws IOException
+     */
     public void sendMessage(String address, Message message) throws IOException{
             if(address == "localhost"){
                 this.sendMessage(InetAddress.getLocalHost(), message);
@@ -47,6 +64,11 @@ public class UDPSender {
             }
     }
     
+    /**
+     *
+     * @param address
+     * @param json
+     */
     public void sendJSON(String address, JSONObject json){
         try {
             if(address == "localhost"){

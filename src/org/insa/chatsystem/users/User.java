@@ -17,6 +17,11 @@ public class User {
     private InetAddress address;
     private int nbUnreadMessages = 0;
     
+    /**
+     *
+     * @param nickname
+     * @param address
+     */
     public User(String nickname, InetAddress address){
         this.nickname = nickname;
         this.address = address;
@@ -45,10 +50,16 @@ public class User {
         }
     }
 
+    /**
+     *
+     */
     public void addNewUnreadMessage(){
         this.nbUnreadMessages++;
     }
     
+    /**
+     *
+     */
     public void resetUnreadMessages(){
         this.nbUnreadMessages = 0;
     }

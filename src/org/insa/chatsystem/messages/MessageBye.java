@@ -12,10 +12,17 @@ import org.json.JSONObject;
  */
 public class MessageBye extends Message {
     
+    /**
+     * Build a bye message.
+     */
     public MessageBye(){
         this.type = Message.TYPE_BYE;
     }
     
+    /**
+     * Transform the message in JSON ready to be sent.
+     * @return The JSON Object from the message.
+     */
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();

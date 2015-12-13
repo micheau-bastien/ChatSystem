@@ -15,11 +15,19 @@ public class MessageFileReq extends Message {
     
     private String name;
     
+    /**
+     * Build the message.
+     * @param name
+     */
     public MessageFileReq (String name){
         this.type = Message.TYPE_FILEREQ;
         this.name = name;
     }
     
+    /**
+     * Transform the message in JSON ready to be sent.
+     * @return The JSON object from the message
+     */
     @Override
     public JSONObject toJSON() {
         JSONObject json = super.toJSON();

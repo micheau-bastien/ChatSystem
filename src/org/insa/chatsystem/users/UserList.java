@@ -16,11 +16,20 @@ import javax.swing.DefaultListModel;
  */
 public class UserList extends DefaultListModel<User>{
     
+    /**
+     * Build the first (and empty) User list model.
+     * @throws UnknownHostException
+     */
     public UserList() throws UnknownHostException {
         super();
         //this.addUser(new User("You", InetAddress.getLocalHost()));
     }
     
+    /**
+     * Check if the user is already connected.
+     * @param address
+     * @return true if the user is already connected or false elsewise.
+     */
     public boolean isAlreadyConnected(InetAddress address){
         for(int n =0; n<this.size(); n++){
             if(this.get(n).getAddress().equals(address)){
@@ -30,16 +39,27 @@ public class UserList extends DefaultListModel<User>{
         return false;
     }
     
+    /**
+     * Add user to the connected user list.
+     * @param user
+     */
     public void addUser(User user){
         this.addElement(user);
         System.out.println("NEW USER : "+this.size() + "  " + this);
     }
     
-    public void delete(){
+    /**
+     * Empty the list of connected users
+     */
+    public void removeAllUsers(){
         this.removeAllElements();
         System.out.println("Delete , stays : " + this.size() + "  "+this);
     }
     
+    /**
+     * Remove the user from the cnnected user list.
+     * @param user
+     */
     public void removeUser(User user){
         this.removeElement(user);
         System.out.println("Delete , stays : ");
@@ -48,6 +68,11 @@ public class UserList extends DefaultListModel<User>{
         }
     }
     
+    /**
+     * Search an User from the connected user list by his nickname.
+     * @param nickname
+     * @return The User object of the searched nickname.
+     */
     public User searchUser(String nickname){
         for(int n =0; n<this.size(); n++){
             if(this.get(n).getNickname() == nickname){
@@ -57,6 +82,11 @@ public class UserList extends DefaultListModel<User>{
         return null;
     }
     
+    /**
+     * Search an User from the connected user list by his address.
+     * @param address
+     * @return The User object of the searched nickname.
+     */
     public User searchUser(InetAddress address){
         for(int n =0; n<this.size(); n++){
             if(this.get(n).getAddress().equals(address)){

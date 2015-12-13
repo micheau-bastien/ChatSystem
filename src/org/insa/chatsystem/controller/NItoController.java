@@ -7,12 +7,21 @@ package org.insa.chatsystem.controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import org.insa.chatsystem.messages.Message;
 
 /**
- *
+ * The interface between the chatNI and the Controller
  * @author Bastien
  */
 public interface NItoController {
-    void rcvMessage(InetAddress source, Message message) throws IOException;
+
+    /**
+     * Handle the logic behind a message's reception.
+     * @param source : The sender of the received message
+     * @param message : The message object received
+     * @throws IOException
+     * @throws UnknownHostException
+     */
+    void rcvMessage(InetAddress source, Message message) throws IOException, UnknownHostException;
 }

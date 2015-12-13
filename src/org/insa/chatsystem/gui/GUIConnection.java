@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 package org.insa.chatsystem.gui;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Insets;
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.net.SocketException;
 
 /**
- *
+ * First view of the ChatSystem, the user will set his nickname and connect.
  * @author Bastien
  */
 public class GUIConnection extends JPanel implements ActionListener{
@@ -22,6 +19,11 @@ public class GUIConnection extends JPanel implements ActionListener{
     private final JButton connectButton;
     private final GUIConnectionToGUI gUIConnectionToGUI;
     
+    /**
+     * Build the connection UI
+     * @param gUIConnectionToGUI
+     * @throws SocketException
+     */
     public GUIConnection(GUIConnectionToGUI gUIConnectionToGUI) throws SocketException{
         this.gUIConnectionToGUI = gUIConnectionToGUI;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

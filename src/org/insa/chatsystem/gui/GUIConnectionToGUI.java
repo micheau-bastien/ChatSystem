@@ -12,6 +12,12 @@ import java.io.IOException;
  * @author Bastien
  */
 public interface GUIConnectionToGUI {
+
+    /**
+     * Asks to the GUI to connect the local user with the choosen nickname.
+     * @param nickname
+     * @throws IOException
+     */
     public void connect(String nickname)  throws IOException ;
     
 }

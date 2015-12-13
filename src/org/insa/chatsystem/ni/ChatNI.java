@@ -14,10 +14,14 @@ import org.insa.chatsystem.controller.NItoController;
 import org.insa.chatsystem.messages.Message;
 
 /**
- *
+ * ChatNI class to handle UDP and TCP (in the futur) receiver and senders.
  * @author Bastien
  */
 public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
+
+    /**
+     *
+     */
     public static final int PORT = 8045;
     private boolean isListening = false;
     private UDPSender udpSender;
@@ -30,7 +34,13 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
     private NItoController niToController;
     
     // @TODO : faire une méthode démarre qui fait les fonction dans lesquelles on passe this en arg
-    public ChatNI(ChatController chatController) throws SocketException{
+
+    /**
+     * Build the ChatNI
+     * @param chatController
+     * @throws SocketException
+     */
+        public ChatNI(ChatController chatController) throws SocketException{
         this.niToController = chatController;
         socket = new DatagramSocket(ChatNI.PORT);
         this.udpSender = new UDPSender(this.socket);
@@ -53,6 +63,12 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
         return udpReceiver;
     }
 
+    /**
+     * Transmit the message received by UDP Receiver to ChatController.
+     * @param source
+     * @param message
+     * @throws IOException
+     */
     @Override
     public void rcvdMessage(InetAddress source, Message message) throws IOException {
         synchronized(this.niToController){
@@ -60,11 +76,20 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
         }
     }
 
+    /**
+     * Transmit the message created by the ChatController to the UDPSender.
+     * @param destination
+     * @param message
+     * @throws IOException
+     */
     @Override
     public void sendMessage(InetAddress destination, Message message) throws IOException{
         this.udpSender.sendMessage(destination, message);
     }
 
+    /**
+     * Start the listening of the UDP receiver.
+     */
     @Override
     public void startListening() {
         if(!isListening){

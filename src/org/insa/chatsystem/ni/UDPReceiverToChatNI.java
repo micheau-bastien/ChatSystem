@@ -15,5 +15,12 @@ import org.insa.chatsystem.messages.Message;
  * @author Bastien
  */
 public interface UDPReceiverToChatNI {
+
+    /**
+     *
+     * @param source
+     * @param message
+     * @throws IOException
+     */
     void rcvdMessage(InetAddress source, Message message) throws IOException;
 }

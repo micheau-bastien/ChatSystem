@@ -17,6 +17,13 @@ public class MessageTextExchanged {
     private InetAddress source, dest;
     private Date date;
     
+    /**
+     *
+     * @param message
+     * @param source
+     * @param dest
+     * @param date
+     */
     public MessageTextExchanged(MessageMessage message, InetAddress source, InetAddress dest, Date date){
         this.source = source;
         this.dest = dest;

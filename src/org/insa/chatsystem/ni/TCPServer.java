@@ -20,6 +20,9 @@ public class TCPServer extends Thread{
     private Socket socket;
     private ArrayList<TCPReceiver> listReceiver;
     
+    /**
+     *
+     */
     public TCPServer(){
         try {
             this.serverSocket = new ServerSocket(ChatNI.PORT);    
