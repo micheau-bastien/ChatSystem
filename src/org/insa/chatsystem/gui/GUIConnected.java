@@ -131,7 +131,9 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     public void valueChanged(ListSelectionEvent e) {
         try {
             if (this.list.getSelectedValue() == null){
-                this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
+                if(this.gUIConnectedToGUI.fetchUserList().size() != 0){
+                    this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
+                }
             }else{
                 this.selectedUser = this.list.getSelectedValue();
             }
@@ -219,5 +221,6 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     public void connect() {
         // To test : Peut surement être supprimé depuis que l'on reset proprement le model des users.
         this.list.setModel(this.gUIConnectedToGUI.fetchUserList());
+        this.selectedUser = this.gUIConnectedToGUI.fetchUserList().get(0);
     }
 }
