@@ -150,10 +150,12 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.sendButton){
             try {
-                gUIConnectedToGUI.sendMessage(this.selectedUser, this.textToSend.getText());
-                this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
-                this.textToSend.setText("");
-                this.messagesList.repaint();
+                if (!this.textToSend.getText().equals("")){
+                    gUIConnectedToGUI.sendMessage(this.selectedUser, this.textToSend.getText());
+                    this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
+                    this.textToSend.setText("");
+                    this.messagesList.repaint();
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -197,15 +199,15 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() != KeyEvent.VK_ALT){
             try {
-                gUIConnectedToGUI.sendMessage(this.selectedUser, this.textToSend.getText());
-                this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
-                this.textToSend.setText("");
-                this.messagesList.repaint();
+                if (!this.textToSend.getText().equals("")){
+                    gUIConnectedToGUI.sendMessage(this.selectedUser, this.textToSend.getText());
+                    this.messagesList.setText(this.messagesList.getText()+"\n"+"you : " +this.textToSend.getText());
+                    this.textToSend.setText("");
+                    this.messagesList.repaint();
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() == KeyEvent.VK_ALT){
-            this.textToSend.setText(this.textToSend.getText()+"\n");
         }
     }
 
