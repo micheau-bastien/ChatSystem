@@ -31,9 +31,9 @@ public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, 
      */
     public GUI() throws SocketException, UnknownHostException {
         GUI.guiToController = new ChatController(this);
+        this.guiConnection = new GUIConnection(this);
         this.guiConnected = new GUIConnected(this);
         GUI.guiToGUIConnected = guiConnected;
-        this.guiConnection = new GUIConnection(this);
         this.setLocationRelativeTo(null);
         this.setTitle("ChatSystem MICHEAU BRICARD");
         this.setMinimumSize(new Dimension(600, 400));

@@ -9,21 +9,21 @@ import java.net.UnknownHostException;
 import org.insa.chatsystem.users.User;
 
 /**
- *
+ * Interface between the GUI and the GUIConnected.
  * @author Bastien
  */
 public interface GuiToGuiConnected {
 
     /**
      * Transmit the new message to the connected gui.
-     * @param user
-     * @param message
+     * @param user The remote user who sent the message.
+     * @param message The text message received.
      * @throws UnknownHostException
      */
     public void newMessage(User user, String message) throws UnknownHostException;
 
     /**
-     * Reconnect the GUI Connected view by refreshing the list of connected users.
+     * Connect the GUI Connected view.
      */
     public void connect();
 }

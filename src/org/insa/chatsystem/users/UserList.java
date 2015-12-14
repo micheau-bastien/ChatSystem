@@ -19,7 +19,7 @@ public class UserList extends DefaultListModel<User>{
      * Build the first (and empty) User list model.
      * @throws UnknownHostException
      */
-    public UserList() throws UnknownHostException {
+    public UserList(){
         super();
         //this.addUser(new User("You", InetAddress.getLocalHost()));
     }

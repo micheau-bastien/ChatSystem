@@ -40,12 +40,12 @@ public class ChatNI implements UDPReceiverToChatNI, ChatControllerToChatNI{
      * @param chatController
      * @throws SocketException
      */
-        public ChatNI(ChatController chatController) throws SocketException{
+    public ChatNI(ChatController chatController) throws SocketException{
         this.niToController = chatController;
         socket = new DatagramSocket(ChatNI.PORT);
-        this.udpSender = new UDPSender(this.socket);
         this.udpReceiver = UDPReceiver.sharedInstance(this.socket); // CECI EST UN NEW 
         this.udpReceiver.setUdpReceiverToChatNI(this);
+        this.udpSender = new UDPSender(this.socket);
         //this.tcpServer = new TCPServer();
     }
 

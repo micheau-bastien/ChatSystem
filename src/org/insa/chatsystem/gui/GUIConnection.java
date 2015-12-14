@@ -14,7 +14,7 @@ import java.net.SocketException;
  * First view of the ChatSystem, the user will set his nickname and connect. This class could and should be singleton.
  * @author Bastien
  */
-public class GUIConnection extends JPanel implements ActionListener{
+public class GUIConnection extends JPanel implements ActionListener, KeyListener{
     private final JTextField nicknameTextField;
     private final JButton connectButton;
     private final GUIConnectionToGUI gUIConnectionToGUI;
@@ -32,6 +32,7 @@ public class GUIConnection extends JPanel implements ActionListener{
         this.nicknameTextField.setMaximumSize(new Dimension(200, 30));
         this.nicknameTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.nicknameTextField.setAlignmentY(Component.CENTER_ALIGNMENT);
+        this.nicknameTextField.addKeyListener(this);
         this.add(nicknameTextField);
 
         this.connectButton = new JButton("Connect");
@@ -44,7 +45,9 @@ public class GUIConnection extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            gUIConnectionToGUI.connect(this.getNickname());
+            if(!this.getNickname().equals("")){
+                gUIConnectionToGUI.connect(this.getNickname());
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -52,6 +55,27 @@ public class GUIConnection extends JPanel implements ActionListener{
     
     private String getNickname(){
         return this.nicknameTextField.getText();
+    }
+    
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ENTER && e.getKeyCode() != KeyEvent.VK_ALT){
+            try {
+                if(!this.getNickname().equals("")){
+                    gUIConnectionToGUI.connect(this.getNickname());
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 
 }
