@@ -17,8 +17,8 @@ public interface ChatControllerToChatNI {
     
     /**
      * Send the message built by ChatController.
-     * @param destination
-     * @param message
+     * @param destination the IP address of the remote destination user.
+     * @param message the text message to be sent.
      * @throws IOException
      */
     public void sendMessage(InetAddress destination, Message message) throws IOException;

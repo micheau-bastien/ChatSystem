@@ -10,15 +10,15 @@ import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 
 /**
- *
+ * The inteface from the GUIConnected to the GUI.
  * @author laure
  */
 public interface GUIConnectedToGUI {
 
     /**
      * Transmit the message to be sent and the destination user from the connected view to the controller.
-     * @param destUser
-     * @param text
+     * @param destUser The remote user who will receive the message.
+     * @param text The text to be sent.
      * @throws IOException
      */
     public void sendMessage(User destUser, String text) throws IOException;

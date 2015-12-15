@@ -18,8 +18,8 @@ import org.insa.chatsystem.users.UserList;
 public interface GuiToController {
 
     /**
-     * Handle the localUser connection, will be executed when the connect button from the GUIConnection is clicked.
-     * @param nickname
+     * Handle the localUser connection. Will be executed when the connect button from the GUIConnection is clicked.
+     * @param nickname The nickname choosen by the user
      * @throws IOException
      */
     public void connect(String nickname)  throws IOException ;
@@ -33,14 +33,14 @@ public interface GuiToController {
     public void sendMessage(User destUser, String message) throws IOException;
 
     /**
-     * Handle the local user logout, will be executed when the logout button from the GUIConnected view is clicked.
+     * Handle the local user logout. Will be executed when the logout button from the GUIConnected view is clicked.
      * @throws UnknownHostException
      * @throws IOException
      */
     public void logout()  throws UnknownHostException, IOException;
 
     /**
-     * Returns te connected user list
+     * Returns the connected user list from the controller.
      * @return the connected user list object
      */
     public UserList getUserList();
