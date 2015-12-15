@@ -25,7 +25,7 @@ public interface GuiToController {
     public void connect(String nickname)  throws IOException ;
 
     /**
-     * Send the message passed by the GUIConectd to the destination user when the send button is clicked.
+     * Send the message passed by the GUIConected to the destination user when the send button is clicked.
      * @param destUser
      * @param message
      * @throws IOException

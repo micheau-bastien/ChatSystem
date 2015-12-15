@@ -38,7 +38,7 @@ public class MessageList extends ArrayList<MessageTextExchanged> {
     }
     
     /**
-     * Gives all the messages between the local user andanother user.
+     * Gives all the messages between the local user and another user.
      * @param dest
      * @return all the messages between the local user andanother user.
      * @throws UnknownHostException

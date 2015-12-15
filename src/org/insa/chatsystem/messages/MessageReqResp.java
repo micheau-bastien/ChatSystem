@@ -37,7 +37,7 @@ public class MessageReqResp extends Message {
     }
 
     /**
-     * @return true if the file can be sent or false elsewise.
+     * @return true if the file can be sent or false otherwise.
      */
     public boolean isOk() {
         return ok;

@@ -88,7 +88,7 @@ public class ChatController implements NItoController, GuiToController{
     }
     
     /**
-     * Handle the logic behind a hello message's reception : Add to the conected user list and send back hello if reqReply.
+     * Handle the logic behind a hello message's reception : Add to the source to the conected user list and send back hello if reqReply.
      * @param source : The sender of the received message
      * @param message : The hello message object received
      * @throws IOException
@@ -173,7 +173,7 @@ public class ChatController implements NItoController, GuiToController{
     }
 
     /**
-     * Send the message passed by the GUIConectd to the destination user when the send button is clicked.
+     * Send the message passed by the GUIConected to the destination user when the send button is clicked.
      * @param destUser
      * @param message
      * @throws IOException

@@ -20,8 +20,8 @@ import org.insa.chatsystem.messages.MessageTextExchanged;
 import org.insa.chatsystem.users.User;
 
 /**
- * Connected GUI. This class could and should be singleton.
- * @author Laure&Bastien 
+ * Connected GUI.
+ * @author Bastien 
 */
 public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnected, ActionListener, ListSelectionListener {
     
@@ -41,7 +41,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
     private final JSplitPane hPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     
     /**
-     * Buil the GUI Connected
+     * Build the GUI Connected
      * @param gUIConnectedToGUI
      */
     public GUIConnected(GUIConnectedToGUI gUIConnectedToGUI) {
@@ -55,7 +55,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         this.hPane.setLeftComponent(leftPan);
         this.add(hPane);
     }
-    
+ 
     private void initLeftPan(){
         this.leftPan = new JPanel();
         this.leftPan.setBackground(this.leftMenuColor);
@@ -114,6 +114,7 @@ public class GUIConnected extends JPanel implements KeyListener, GuiToGuiConnect
         this.logoutButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
     }
     
+    // Print all the messages exchanged with the selected user
     private void printMessagesWith(User user) throws UnknownHostException {
         System.out.println("user : " + user);
         MessageList messageExchanged = MessageList.with(user.getAddress());

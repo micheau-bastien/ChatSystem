@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 import javax.swing.DefaultListModel;
 
 /**
- * List of all the connected users. This class could and should be singleton.
+ * List of all the connected users.
  * @author Bastien
  */
 public class UserList extends DefaultListModel<User>{

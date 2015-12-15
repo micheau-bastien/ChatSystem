@@ -8,7 +8,7 @@ package org.insa.chatsystem.messages;
 import org.json.*;
 
 /**
- * Generic class for all the messages exchanged by the CHatSystem.
+ * Generic class for all the messages exchanged by the ChatSystem.
  * @author Bastien
  */
 public abstract class Message {

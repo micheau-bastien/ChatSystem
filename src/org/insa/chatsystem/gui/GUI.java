@@ -15,7 +15,7 @@ import org.insa.chatsystem.controller.*;
 import org.insa.chatsystem.users.User;
 import org.insa.chatsystem.users.UserList;
 /**
- * The handler of all GUI in the chatSystem, can take two states, connection or connected. This class could and should be singleton.
+ * The handler of all GUI in the chatSystem, which can take two states: connection or connected. This class could and should be singleton.
  * @author Bastien
  */
 public class GUI extends JFrame implements MessageObserver, GUIConnectionToGUI, GUIConnectedToGUI {
